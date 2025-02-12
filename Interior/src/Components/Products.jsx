@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 import { products } from "../Data";
 import ProductsCard from "./ProductsCard";
+import { Link } from "react-router-dom";
+import { motion, useInView, AnimatePresence } from "framer-motion";
 
 function Products() {
   const selectedProducts = [];
@@ -28,23 +30,43 @@ function Products() {
                   aliquet velit. Aliquam vulputate velit imperdiet dolor tempor
                   tristique.
                 </p>
-                <button className="duration-300 rounded-full bg-gray-800 text-white font-medium hover:bg-gray-900 border-gray-800 px-7 py-3">
+                <Link
+                  to="/shop"
+                  className="duration-300 rounded-full bg-gray-800 text-white font-medium hover:bg-gray-900 border-gray-800 px-7 py-3"
+                >
                   Explore
-                </button>
+                </Link>
               </div>
             </div>
+            <AnimatePresence mode="wait">
+              {selectedProducts.map((item, index) => {
+                const ref = useRef(null);
+                const isInView = useInView(ref, {
+                  once: true,
+                  margin: "-100px",
+                });
 
-            {selectedProducts.map((item, index) => (
-              <div key={index} className="w-full md:w-1/4 p-2">
-                <ProductsCard
-                  product_id={item.id}
-                  image={item.image}
-                  image_alt={item.name}
-                  product_name={item.name}
-                  product_price={item.price}
-                />
-              </div>
-            ))}
+                return (
+                  <motion.div
+                    ref={ref}
+                    key={index}
+                    className="w-full md:w-1/4 p-2"
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                    exit={{ scale: 0.8, opacity: 0 }}
+                    transition={{ duration: 0.8, delay: index * 0.3 }}
+                  >
+                    <ProductsCard
+                      product_id={item.id}
+                      image={item.image}
+                      image_alt={item.name}
+                      product_name={item.name}
+                      product_price={item.price}
+                    />
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
           </div>
         </div>
       </section>

@@ -83,3 +83,13 @@
   opacity: 1;
   background: #3b5d50;
 }
+
+
+/* blogs */
+.blog-content .blog-img img {
+  transition: all 0.3s ease;
+}
+
+.blog-content:hover .blog-img img {
+  opacity: 0.7;
+}
