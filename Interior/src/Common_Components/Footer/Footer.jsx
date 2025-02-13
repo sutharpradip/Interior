@@ -8,7 +8,7 @@ function Footer() {
   };
 
   return (
-    <footer className="pt-20">
+    <footer className="">
       <div className="container pt-20 mx-auto">
         <div className="flex flex-wrap justify-center  lg:justify-between relative">
           <div className="w-full md:w-7/12">

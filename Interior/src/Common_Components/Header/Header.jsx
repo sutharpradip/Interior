@@ -106,20 +106,6 @@ function Header() {
 
             <li className="lg:mx-4 mx-0 ">
               <NavLink
-                to="/services"
-                className={({ isActive }) =>
-                  `inline-flex p-1 items-center font-medium ${
-                    isActive ? "text-yellow-400 active" : "text-gray-400"
-                  } hover:text-yellow-300 duration-200 md:text-sm relative`
-                }
-                onClick={LinkClick}
-              >
-                Services
-              </NavLink>
-            </li>
-
-            <li className="lg:mx-4 mx-0 ">
-              <NavLink
                 to="/blogs"
                 className={({ isActive }) =>
                   `inline-flex p-1 items-center font-medium ${
@@ -153,7 +139,7 @@ function Header() {
                 to="/profile"
                 className={({ isActive }) =>
                   `inline-flex items-center mr-10 text-sm font-semibold ${
-                    isActive ? "text-white" : "text-white"
+                    isActive ? "text-yellow-400" : "text-white"
                   } hover:text-yellow-300 duration-200`
                 }
                 onClick={LinkClick}
@@ -167,7 +153,7 @@ function Header() {
                 to="/cart"
                 className={({ isActive }) =>
                   `inline-flex items-center text-sm font-semibold ${
-                    isActive ? "text-white" : "text-white"
+                    isActive ? "text-yellow-400" : "text-white"
                   } hover:text-yellow-300 duration-200`
                 }
                 onClick={LinkClick}

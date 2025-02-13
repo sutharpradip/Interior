@@ -53,7 +53,7 @@ function Shop() {
               {filteredProducts.length > 0 ? (
                 filteredProducts.map((item, index) => (
                   <motion.div
-                    key={item.id}
+                    key={index}
                     className="w-full md:w-1/4 p-2"
                     initial={{ scale: 0.8, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
