@@ -6,7 +6,6 @@ import { useCart } from "../Context/CartContext";
 
 function Cart() {
   const { cart } = useCart();
-  console.log(cart);
 
   useEffect(() => {
     console.log("Cart Updated:", cart);
@@ -33,7 +32,7 @@ function Cart() {
   return (
     <section className="pt-10 pb-20">
       <div className="container">
-        <div className="flex justify-between flex-wrap">
+        <div className="flex gap-10 justify-between flex-wrap">
           {/* Cart Items */}
           <div className="w-full md:w-3/5">
             <div className="flex flex-col gap-3">

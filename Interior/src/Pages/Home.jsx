@@ -11,7 +11,6 @@ function Home() {
   return (
     <>
       <HeroSec />
-      {/* <Outlet /> */}
       <Products />
       <WhyChooseUs />
       <ModernInterior />

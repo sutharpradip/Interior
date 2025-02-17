@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
-import Notification from "./Notification";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 function ProductsCard({
   image,
@@ -12,52 +12,28 @@ function ProductsCard({
   product_price,
   product_id,
 }) {
-  const [notification, setNotification] = useState("");
-  const toastId = React.useRef(null);
+  const { addToCart, loggedInUser } = useCart();
 
-  const { addToCart } = useCart();
-
-  // Show toast with auto-close and store its ID
-  const notify = () => {
-    if (!toastId.current) {
-      toastId.current = toast.info(`${product_name} Added to cart`, {
-        autoClose: 2000, // Auto dismiss in 2 sec
-        closeOnClick: true,
-        onClose: () => {
-          toastId.current = null; // Reset toastId when it closes
-        },
-      });
-    }
-  };
-
-  // Manually dismiss toast if it exists
-  const dismiss = () => {
-    if (toastId.current !== null) {
-      toast.dismiss(toastId.current);
-      toastId.current = null; // Reset after dismissing
-    }
-  };
+  useEffect(() => {
+    AOS.init();
+  }, []);
 
   const handleAddCart = (e) => {
     e.preventDefault();
-    const product = {
-      id: product_id,
-      name: product_name,
-      price: product_price,
-      image: image,
-      quantity: 1,
-    };
+    if (loggedInUser) {
+      const product = {
+        id: product_id,
+        name: product_name,
+        price: product_price,
+        image: image,
+        quantity: 1,
+      };
 
-    addToCart(product);
-    notify();
-    // setNotification({
-    //   message: `${product_name} Added to cart`,
-    //   type: "success",
-    // });
-
-    // setTimeout(() => {
-    //   setNotification(null);
-    // }, 3000);
+      addToCart(product);
+      toast.info(`${product_name} added to cart`);
+    } else {
+      toast.error("Please login to add product to cart");
+    }
   };
 
   return (
@@ -65,6 +41,7 @@ function ProductsCard({
       <Link
         // to={`/product/${product_id}`}
         className="product-card text-center pb-10 block"
+        data-aos="zoom-in"
       >
         <div className="product-img mb-4">
           <img className="w-full" src={image} alt={image_alt} />
@@ -82,15 +59,6 @@ function ProductsCard({
           </button>
         </div>
       </Link>
-      <ToastContainer />
-
-      {/* Notification Component */}
-      {notification && (
-        <Notification
-          notification={notification.message}
-          type={notification.type}
-        />
-      )}
     </>
   );
 }

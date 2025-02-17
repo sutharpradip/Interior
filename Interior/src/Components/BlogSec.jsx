@@ -13,7 +13,7 @@ function BlogSec() {
             to="/blogs"
             className="underline font-semibold text-gray-800 text-sm"
           >
-            <Link to="">view all blogs</Link>
+            view all blogs
           </Link>
         </div>
 

@@ -1,12 +1,11 @@
 import React, { useState } from "react";
-import Notification from "./Notification";
 import { v4 as uuidv4 } from "uuid";
+import { toast } from "react-toastify";
 
 function RegisterModal({ isRegisterOpen, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [notification, setNotification] = useState(null);
 
   const handleRegister = async () => {
     const response = await fetch("http://localhost:5000/users");
@@ -17,10 +16,7 @@ function RegisterModal({ isRegisterOpen, onClose }) {
     const existingUser = users.find((user) => user.email === email);
 
     if (existingUser) {
-      setNotification({ message: "User Already available", type: "Error" });
-      setTimeout(() => {
-        setNotification(null);
-      }, 3000);
+      toast.error("This user is already exist");
       return;
     }
 
@@ -42,17 +38,13 @@ function RegisterModal({ isRegisterOpen, onClose }) {
       body: JSON.stringify(newUser),
     });
 
-    setNotification({ message: "User Registered", type: "Success" });
-
-    setTimeout(() => {
-      setNotification(null);
-      onClose();
-    }, 3000);
+    onClose();
+    toast.success(`Registred as ${name}`);
   };
 
   return (
     isRegisterOpen && (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
         <div className="bg-white p-6 rounded-lg shadow-lg w-96">
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Register</h2>
           <input
@@ -91,14 +83,6 @@ function RegisterModal({ isRegisterOpen, onClose }) {
             Close
           </button>
         </div>
-
-        {/* Notification Component */}
-        {notification && (
-          <Notification
-            notification={notification.message}
-            type={notification.type}
-          />
-        )}
       </div>
     )
   );

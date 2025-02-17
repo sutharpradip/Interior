@@ -3,19 +3,45 @@ import { createContext, useState, useContext, useEffect } from "react";
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-  const [cart, setCart] = useState(() => {
-    // Load cart from localStorage (if available) on initial render
-    const savedCart = localStorage.getItem("cart");
-    return savedCart ? JSON.parse(savedCart) : [];
-  });
+  const [cart, setCart] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(null);
 
-  // Update localStorage whenever cart state changes
+  // Load user from localStorage when app starts
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      setLoggedInUser(JSON.parse(storedUser));
+    }
+  }, []);
 
-  // Add product to cart (increase quantity if it already exists)
+  // Fetch cart from db.json when user logs in
+  useEffect(() => {
+    if (loggedInUser) {
+      fetch(`http://localhost:5000/users/${loggedInUser.id}`)
+        .then((response) => response.json())
+        .then((user) => setCart(user.cart || []));
+    }
+  }, [loggedInUser]);
+
+  // Update cart in db.json (debounced to prevent excessive requests)
+  useEffect(() => {
+    if (loggedInUser) {
+      const timeout = setTimeout(() => {
+        fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cart }),
+        });
+      }, 1000); // Wait 1 second before sending update
+
+      return () => clearTimeout(timeout);
+    }
+  }, [cart, loggedInUser]);
+
   const addToCart = (product) => {
+    if (!loggedInUser) {
+      return alert("Please Login");
+    }
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
       if (existingItem) {
@@ -29,12 +55,11 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // Remove a product completely from the cart
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  // Increase quantity
+  // incresae items quantity in cart
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -43,23 +68,19 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // Decrease quantity (remove item if quantity is 1)
+  // decrease items quantity in cart
   const decreaseQuantity = (id) => {
-    setCart(
-      (prevCart) =>
-        prevCart
-          .map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-          )
-          .filter((item) => item.quantity > 0) // Remove if quantity becomes 0
+    setCart((prevCart) =>
+      prevCart
+        .map((item) =>
+          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+        )
+        .filter((item) => item.quantity > 0)
     );
   };
 
-  // Clear cart
-  const clearCart = () => {
-    setCart([]);
-    localStorage.removeItem("cart"); // Clear localStorage on cart reset
-  };
+  // clear cart
+  const clearCart = () => setCart([]);
 
   return (
     <CartContext.Provider
@@ -70,6 +91,8 @@ export const CartProvider = ({ children }) => {
         increaseQuantity,
         decreaseQuantity,
         clearCart,
+        setLoggedInUser,
+        loggedInUser,
       }}
     >
       {children}

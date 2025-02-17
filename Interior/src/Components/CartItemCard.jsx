@@ -1,35 +1,20 @@
 import React, { useState } from "react";
 import { useCart } from "../Context/CartContext"; // Import cart functions
-import Notification from "./Notification";
 
 function CartItemCard({ id, image, name, price, quantity, soldBy }) {
   const { increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
-  const [notification, setNotification] = useState("");
 
   const handleDecrease = () => {
     if (quantity === 1) {
       removeFromCart(id); // Remove item if quantity is 1
-
-      setNotification({
-        message: `${name} Removed from cart`,
-        type: "error",
-      });
     } else {
       decreaseQuantity(id);
-      setNotification({
-        message: `${name} Decreased from cart`,
-        type: "error",
-      });
     }
-
-    setTimeout(() => {
-      setNotification(null);
-    }, 2000);
   };
 
   return (
     <>
-      <div className="cart-item flex justify-between bg-gray-100 border p-5 rounded-lg">
+      <div className="cart-item flex md:flex-row flex-col gap-8 justify-between bg-gray-100 border p-5 rounded-lg">
         {/* Product Details */}
         <div className="flex gap-3 md:w-1/3 w-full">
           <div className="cart-item-image rounded-md overflow-hidden w-[75px] h-[75px]">
@@ -81,13 +66,6 @@ function CartItemCard({ id, image, name, price, quantity, soldBy }) {
           <h3 className="mt-3 font-medium">${(price * quantity).toFixed(2)}</h3>
         </div>
       </div>
-      {/* Notification Component */}
-      {notification && (
-        <Notification
-          notification={notification.message}
-          type={notification.type}
-        />
-      )}
     </>
   );
 }

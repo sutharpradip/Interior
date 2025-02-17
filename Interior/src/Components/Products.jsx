@@ -38,35 +38,19 @@ function Products() {
                 </Link>
               </div>
             </div>
-            <AnimatePresence mode="wait">
-              {selectedProducts.map((item, index) => {
-                const ref = useRef(null);
-                const isInView = useInView(ref, {
-                  once: true,
-                  margin: "-100px",
-                });
-
-                return (
-                  <motion.div
-                    ref={ref}
-                    key={index}
-                    className="w-full md:w-1/4 p-2"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-                    exit={{ scale: 0.8, opacity: 0 }}
-                    transition={{ duration: 0.8, delay: index * 0.3 }}
-                  >
-                    <ProductsCard
-                      product_id={item.id}
-                      image={item.image}
-                      image_alt={item.name}
-                      product_name={item.name}
-                      product_price={item.price}
-                    />
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
+            {selectedProducts.map((item, index) => {
+              return (
+                <div key={index} className="w-full md:w-1/4 p-2">
+                  <ProductsCard
+                    product_id={item.id}
+                    image={item.image}
+                    image_alt={item.name}
+                    product_name={item.name}
+                    product_price={item.price}
+                  />
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

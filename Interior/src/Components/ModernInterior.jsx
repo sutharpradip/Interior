@@ -34,7 +34,7 @@ function ModernInterior() {
             </div>
 
             <div className="md:w-5/12 w-full lg:ps-20">
-              <div classname="content">
+              <div className="content">
                 <h2 className="text-3xl font-inter text-gray-800 font-medium ">
                   We Help You Make Modern Interior Design
                 </h2>

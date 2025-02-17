@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
 import LoginModal from "../../Components/LoginModal";
 import RegisterModal from "../../Components/RegisterModal";
+// import { useCart } from "../../Context/CartContext";
+import { toast } from "react-toastify";
+// import { ToastContainer, toast } from "react-toastify";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -12,20 +15,26 @@ function Header() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [loggedInUser, setLoggedInUser] = useState(null);
 
-  // Fetch user from local storage on mount
+  const dropdownRef = useRef(null);
+  const navigate = useNavigate();
+
   useEffect(() => {
-    const StoredUser = localStorage.getItem("loggedInUser");
-    if (StoredUser) {
-      setLoggedInUser(JSON.parse(StoredUser)); // Parse and set the logged-in user
+    const storedUser = localStorage.getItem("loggedInUser");
+    if (storedUser) {
+      setLoggedInUser(JSON.parse(storedUser)); // Parse and set the logged-in user
     }
   }, [isLoginModalOpen]);
 
   // Handle logout
   const handleLogout = () => {
-    localStorage.removeItem("loggedInUser"); // Remove user from local storage
+    toast.warn(`${loggedInUser.name} is logged Out`);
+    localStorage.removeItem("loggedInUser");
     setLoggedInUser(null);
     setIsDropdownOpen(false);
+    window.location.reload();
   };
+
+  // useEffect(() => {}, [loggedInUser]);
 
   const handleLoginClick = () => {
     setIsLoginModalOpen(true);
@@ -60,8 +69,19 @@ function Header() {
     setIsMenuOpen(false);
   };
 
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <>
+      {/* <ToastContainer /> */}
       <header
         className={`${
           headerFixed ? "header-fixed" : ""
@@ -88,7 +108,7 @@ function Header() {
 
           <nav
             className={`md:flex basis-full grow md:basis-auto duration-300 ease-out overflow-hidden md:overflow-visible ${
-              isMenuOpen ? "h-[360px] md:h-0" : "h-0"
+              isMenuOpen ? "h-[525px] md:h-0" : "h-0"
             }`}
           >
             <ul className="flex md:flex-row mt-5 md:mt-0 gap-y-5 flex-col md:items-center justify-center ms-auto mr-10">
@@ -164,7 +184,7 @@ function Header() {
             </ul>
 
             <ul className="flex items-center mt-5 md:mt-0 relative">
-              <li className="relative">
+              <li className="">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="text-white text-sm font-semibold hover:text-yellow-300 duration-200"
@@ -172,7 +192,10 @@ function Header() {
                   <i className="fa-solid fa-user"></i>
                 </button>
                 {isDropdownOpen && (
-                  <div className="absolute right-0 mt-2 w-40 bg-white rounded-lg shadow-lg overflow-hidden z-50">
+                  <div
+                    ref={dropdownRef}
+                    className="absolute right-0 mt-2 w-full md:w-40 bg-white rounded-lg shadow-lg overflow-hidden z-50"
+                  >
                     <ul>
                       <li className="px-4 py-2 text-gray-700 font-medium">
                         {loggedInUser
@@ -222,7 +245,15 @@ function Header() {
                       isActive ? "text-yellow-400" : "text-white"
                     } hover:text-yellow-300 duration-200`
                   }
-                  onClick={LinkClick}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (loggedInUser) {
+                      // window.location.href = "/cart";
+                      navigate("/cart");
+                    } else {
+                      setIsLoginModalOpen(true);
+                    }
+                  }}
                 >
                   <i className="fa-solid fa-cart-shopping"></i>
                 </NavLink>

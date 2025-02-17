@@ -1,25 +1,63 @@
 {
   "users": [
     {
-      "id": "9ed9671b-0909-4406-8889-5898c024f2ba",
-      "name": "suresh",
-      "email": "suresh@mail.com",
-      "password": "1234",
-      "cart": []
+      "id": "849f515c-3a8f-4fb1-8118-6bedbafe72d1",
+      "name": "Pradeep",
+      "email": "pradeep@mail.com",
+      "password": "1234567",
+      "cart": [
+        {
+          "id": "1",
+          "name": "chair 1",
+          "price": "50.00",
+          "image": "src/assets/images/chair_1.png",
+          "quantity": 3
+        },
+        {
+          "id": "5",
+          "name": "chair 5",
+          "price": "50.00",
+          "image": "src/assets/images/chair_5.png",
+          "quantity": 1
+        }
+      ]
     },
     {
-      "id": "e1e310b3-8a6a-4c60-9653-d524ded696e3",
-      "name": "lokesh",
-      "email": "lokesh@mail.com",
+      "id": "196a52a7-0a96-492e-a24c-3f6cee2595cb",
+      "name": "Vh Chaudhary",
+      "email": "vh@mail.com",
       "password": "1234",
-      "cart": []
+      "cart": [
+        {
+          "id": "4",
+          "name": "chair 4",
+          "price": "50.00",
+          "image": "src/assets/images/chair_4.png",
+          "quantity": 1
+        }
+      ]
     },
     {
-      "id": "ee945275-8864-417d-967d-5c4e6db99e25",
-      "name": "Paras",
-      "email": "paras@mail.com",
+      "id": "222ef4a8-542e-4525-be81-ed1a7aa14295",
+      "name": "Jitu",
+      "email": "jitu@mail.com",
       "password": "1234",
-      "cart": []
+      "cart": [
+        {
+          "id": "2",
+          "name": "chair 2",
+          "price": "50.00",
+          "image": "src/assets/images/chair_2.png",
+          "quantity": 2
+        },
+        {
+          "id": "3",
+          "name": "chair 3",
+          "price": "50.00",
+          "image": "src/assets/images/chair_3.png",
+          "quantity": 2
+        }
+      ]
     }
   ]
 }

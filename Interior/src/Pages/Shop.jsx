@@ -46,41 +46,32 @@ function Shop() {
         </div>
       </section>
 
-      <section className="products py-10">
+      <section className="products py-10 pb-20">
         <div className="container">
           <div className="products flex flex-wrap gap-y-8">
-            <AnimatePresence mode="wait">
-              {filteredProducts.length > 0 ? (
-                filteredProducts.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    className="w-full md:w-1/4 p-2"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    exit={{ scale: 0.8, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <ProductsCard
-                      image={item.image}
-                      image_alt={item.name}
-                      product_name={item.name}
-                      product_id={item.id}
-                      product_price={item.price}
-                    />
-                  </motion.div>
-                ))
-              ) : (
-                <motion.p
-                  className="text-gray-600 text-lg text-center w-full"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  No products available in this category.
-                </motion.p>
-              )}
-            </AnimatePresence>
+            {filteredProducts.length > 0 ? (
+              filteredProducts.map((item, index) => (
+                <div key={index} className="w-full md:w-1/4 p-2">
+                  <ProductsCard
+                    image={item.image}
+                    image_alt={item.name}
+                    product_name={item.name}
+                    product_id={item.id}
+                    product_price={item.price}
+                  />
+                </div>
+              ))
+            ) : (
+              <motion.p
+                className="text-gray-600 text-lg text-center w-full"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                No products available in this category.
+              </motion.p>
+            )}
           </div>
         </div>
       </section>
