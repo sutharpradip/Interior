@@ -13,10 +13,10 @@ function Cart() {
   });
 
   // Calculate total items
-  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = (cart || []).reduce((sum, item) => sum + item.quantity, 0);
 
   // Calculate cart total price
-  const cartTotalPrice = cart.reduce(
+  const cartTotalPrice = (cart || []).reduce(
     (sum, item) => sum + item.price * item.quantity,
     0
   );
@@ -37,7 +37,7 @@ function Cart() {
           {/* Cart Items */}
           <div className="w-full md:w-3/5">
             <div className="flex flex-col gap-3">
-              {cart.length === 0 ? (
+              {(cart || []).length === 0 ? (
                 <p className="text-center text-gray-600">Your cart is empty</p>
               ) : (
                 cart.map((item) => (

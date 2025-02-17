@@ -1,0 +1,25 @@
+{
+  "users": [
+    {
+      "id": "9ed9671b-0909-4406-8889-5898c024f2ba",
+      "name": "suresh",
+      "email": "suresh@mail.com",
+      "password": "1234",
+      "cart": []
+    },
+    {
+      "id": "e1e310b3-8a6a-4c60-9653-d524ded696e3",
+      "name": "lokesh",
+      "email": "lokesh@mail.com",
+      "password": "1234",
+      "cart": []
+    },
+    {
+      "id": "ee945275-8864-417d-967d-5c4e6db99e25",
+      "name": "Paras",
+      "email": "paras@mail.com",
+      "password": "1234",
+      "cart": []
+    }
+  ]
+}

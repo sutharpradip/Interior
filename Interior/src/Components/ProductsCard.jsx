@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
+import Notification from "./Notification";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProductsCard({
   image,
@@ -9,7 +12,31 @@ function ProductsCard({
   product_price,
   product_id,
 }) {
+  const [notification, setNotification] = useState("");
+  const toastId = React.useRef(null);
+
   const { addToCart } = useCart();
+
+  // Show toast with auto-close and store its ID
+  const notify = () => {
+    if (!toastId.current) {
+      toastId.current = toast.info(`${product_name} Added to cart`, {
+        autoClose: 2000, // Auto dismiss in 2 sec
+        closeOnClick: true,
+        onClose: () => {
+          toastId.current = null; // Reset toastId when it closes
+        },
+      });
+    }
+  };
+
+  // Manually dismiss toast if it exists
+  const dismiss = () => {
+    if (toastId.current !== null) {
+      toast.dismiss(toastId.current);
+      toastId.current = null; // Reset after dismissing
+    }
+  };
 
   const handleAddCart = (e) => {
     e.preventDefault();
@@ -22,6 +49,15 @@ function ProductsCard({
     };
 
     addToCart(product);
+    notify();
+    // setNotification({
+    //   message: `${product_name} Added to cart`,
+    //   type: "success",
+    // });
+
+    // setTimeout(() => {
+    //   setNotification(null);
+    // }, 3000);
   };
 
   return (
@@ -46,6 +82,15 @@ function ProductsCard({
           </button>
         </div>
       </Link>
+      <ToastContainer />
+
+      {/* Notification Component */}
+      {notification && (
+        <Notification
+          notification={notification.message}
+          type={notification.type}
+        />
+      )}
     </>
   );
 }
