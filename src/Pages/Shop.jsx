@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
 import ProductsCard from "../Components/ProductsCard";
 import { products } from "../Data";
 
@@ -62,15 +61,9 @@ function Shop() {
                 </div>
               ))
             ) : (
-              <motion.p
-                className="text-gray-600 text-lg text-center w-full"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
+              <p className="text-gray-600 text-lg text-center w-full">
                 No products available in this category.
-              </motion.p>
+              </p>
             )}
           </div>
         </div>

@@ -7,17 +7,10 @@
       "password": "1234567",
       "cart": [
         {
-          "id": "1",
-          "name": "chair 1",
+          "id": "7",
+          "name": "chair 7",
           "price": "50.00",
-          "image": "src/assets/images/chair_1.png",
-          "quantity": 3
-        },
-        {
-          "id": "5",
-          "name": "chair 5",
-          "price": "50.00",
-          "image": "src/assets/images/chair_5.png",
+          "image": "public/chair_7.png",
           "quantity": 1
         }
       ]
@@ -32,7 +25,7 @@
           "id": "4",
           "name": "chair 4",
           "price": "50.00",
-          "image": "src/assets/images/chair_4.png",
+          "image": "public/chair_4.png",
           "quantity": 1
         }
       ]
@@ -47,14 +40,14 @@
           "id": "2",
           "name": "chair 2",
           "price": "50.00",
-          "image": "src/assets/images/chair_2.png",
+          "image": "public/chair_2.png",
           "quantity": 2
         },
         {
           "id": "3",
           "name": "chair 3",
           "price": "50.00",
-          "image": "src/assets/images/chair_3.png",
+          "image": "public/chair_3.png",
           "quantity": 2
         }
       ]
