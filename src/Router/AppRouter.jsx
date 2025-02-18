@@ -6,6 +6,8 @@ import Shop from "../Pages/Shop";
 import Blog from "../Pages/Blogs";
 import ContactUs from "../Pages/ContactUs";
 import Cart from "../Pages/Cart";
+import UserDashboard from "../Pages/UserDashboard";
+import Profile from "../Components/Dashboard/Profile";
 
 export default function AppRouter() {
   return (
@@ -17,6 +19,14 @@ export default function AppRouter() {
       <Route path="/blogs" element={<Blog />} />
       <Route path="contact" element={<ContactUs />} />
       <Route path="/cart" element={<Cart />} />
+
+      <Route path="/dashboard/*" element={<UserDashboard />}>
+        <Route path="profile" element={<Profile />} />
+        <Route path="orders" element={<Profile />} />
+        <Route path="wishlist" element={<Profile />} />
+        <Route path="address" element={<Profile />} />
+        <Route path="savedCard" element={<Profile />} />
+      </Route>
     </Routes>
   );
 }

@@ -6,6 +6,8 @@ function RegisterModal({ isRegisterOpen, onClose }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState("");
+  const [gender, setGender] = useState("");
 
   const handleRegister = async () => {
     const response = await fetch("http://localhost:5000/users");
@@ -20,12 +22,18 @@ function RegisterModal({ isRegisterOpen, onClose }) {
       return;
     }
 
+    // Generate avatar URL (using a random avatar generation service)
+    const avatarUrl = `https://avatars.dicebear.com/api/avataaars/${uuidv4()}.svg`;
+
     // create new user
     const newUser = {
       id: uuidv4(),
       name,
       email,
+      phone,
       password,
+      avatar: avatarUrl,
+      gender,
       cart: [],
     };
 
@@ -64,12 +72,34 @@ function RegisterModal({ isRegisterOpen, onClose }) {
           />
 
           <input
+            type="text"
+            placeholder="Phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-green-500"
+          />
+
+          <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="w-full px-3 py-2 border rounded-md mb-3 focus:outline-none focus:ring-2 focus:ring-green-500"
           />
+
+          <div className="mb-3">
+            <label className="block text-gray-700">Gender</label>
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
           <button
             onClick={handleRegister}
             className="w-full bg-green-800  text-white py-2 rounded-md hover:bg-green-700 transition"

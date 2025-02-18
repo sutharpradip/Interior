@@ -1,61 +1,20 @@
 {
   "users": [
     {
-      "id": "849f515c-3a8f-4fb1-8118-6bedbafe72d1",
-      "name": "Pradeep",
+      "id": "a9f5f095-2794-4522-ac6c-c1a5a94359d2",
+      "name": "Pradeep Suthar",
       "email": "pradeep@mail.com",
-      "password": "1234567",
+      "phone": "01234567890",
+      "password": "1234",
+      "avatar": "https://avatars.dicebear.com/api/avataaars/0b1b07d4-5eb9-4648-b3af-d48a1c2f64ee.svg",
+      "gender": "male",
       "cart": [
         {
           "id": "1",
           "name": "chair 1",
           "price": "50.00",
-          "image": "src/assets/images/chair_1.png",
-          "quantity": 3
-        },
-        {
-          "id": "5",
-          "name": "chair 5",
-          "price": "50.00",
-          "image": "src/assets/images/chair_5.png",
+          "image": "public/chair_1.png",
           "quantity": 1
-        }
-      ]
-    },
-    {
-      "id": "196a52a7-0a96-492e-a24c-3f6cee2595cb",
-      "name": "Vh Chaudhary",
-      "email": "vh@mail.com",
-      "password": "1234",
-      "cart": [
-        {
-          "id": "4",
-          "name": "chair 4",
-          "price": "50.00",
-          "image": "src/assets/images/chair_4.png",
-          "quantity": 1
-        }
-      ]
-    },
-    {
-      "id": "222ef4a8-542e-4525-be81-ed1a7aa14295",
-      "name": "Jitu",
-      "email": "jitu@mail.com",
-      "password": "1234",
-      "cart": [
-        {
-          "id": "2",
-          "name": "chair 2",
-          "price": "50.00",
-          "image": "src/assets/images/chair_2.png",
-          "quantity": 2
-        },
-        {
-          "id": "3",
-          "name": "chair 3",
-          "price": "50.00",
-          "image": "src/assets/images/chair_3.png",
-          "quantity": 2
         }
       ]
     }

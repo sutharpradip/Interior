@@ -18,9 +18,10 @@ function LoginModal({ isOpen, onClose }) {
 
     if (user) {
       localStorage.setItem("loggedInUser", JSON.stringify(user));
-      setLoggedInUser(user); // Store user in cart context
+      setLoggedInUser(user);
       onClose(); // Close modal after successful login
       toast.success(`Logged In as ${user.name}`);
+      window.location.reload();
     } else {
       toast.error("Invalid Email or Password");
     }

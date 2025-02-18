@@ -198,9 +198,15 @@ function Header() {
                   >
                     <ul>
                       <li className="px-4 py-2 text-gray-700 font-medium">
-                        {loggedInUser
+                        {/* {loggedInUser
                           ? `Welcome, ${loggedInUser.name}`
-                          : "Please login"}
+                          : "Please login"} */}
+
+                        {loggedInUser ? (
+                          <NavLink to="/dashboard">{loggedInUser.name}</NavLink>
+                        ) : (
+                          "Please Login"
+                        )}
                       </li>
 
                       {!loggedInUser ? (
