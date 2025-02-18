@@ -17,11 +17,7 @@ function WhyChooseUs() {
             <div className="flex flex-wrap gap-y-8 my-10">
               <div className="w-full md:w-1/2 p-2">
                 <div className="icon mb-3 relative before:z-[-1] before:block before:top-2 before:left-5 z-10 before:w-9 before:rounded-full before:h-9 before:absolute before:bg-gray-300">
-                  <img
-                    className=""
-                    src="public/assets/images/truck.svg"
-                    alt=""
-                  />
+                  <img className="" src="public/truck.svg" alt="" />
                 </div>
                 <h3 className="my-1 font-medium text-gray-800">
                   Fast & Free Shipping
@@ -34,11 +30,7 @@ function WhyChooseUs() {
 
               <div className="w-full md:w-1/2 p-2">
                 <div className="icon mb-3 relative before:z-[-1] before:block before:top-2 before:left-5 z-10 before:w-9 before:rounded-full before:h-9 before:absolute before:bg-gray-300">
-                  <img
-                    className=""
-                    src="./public/assets/images/bag.svg"
-                    alt=""
-                  />
+                  <img className="" src="public/bag.svg" alt="" />
                 </div>
                 <h3 className="my-1 font-medium text-gray-800">
                   Fast & Free Shipping
@@ -51,11 +43,7 @@ function WhyChooseUs() {
 
               <div className="w-full md:w-1/2 p-2">
                 <div className="icon mb-3 relative before:z-[-1] before:block before:top-2 before:left-5 z-10 before:w-9 before:rounded-full before:h-9 before:absolute before:bg-gray-300">
-                  <img
-                    className=""
-                    src="./public/assets/images/support.svg"
-                    alt=""
-                  />
+                  <img className="" src="public/support.svg" alt="" />
                 </div>
                 <h3 className="my-1 font-medium text-gray-800">
                   Fast & Free Shipping
@@ -68,11 +56,7 @@ function WhyChooseUs() {
 
               <div className="w-full md:w-1/2 p-2">
                 <div className="icon mb-3 relative before:z-[-1] before:block before:top-2 before:left-5 z-10 before:w-9 before:rounded-full before:h-9 before:absolute before:bg-gray-300">
-                  <img
-                    className=""
-                    src="./public/assets/images/return.svg"
-                    alt=""
-                  />
+                  <img className="" src="public/return.svg" alt="" />
                 </div>
                 <h3 className="my-1 font-medium text-gray-800">
                   Fast & Free Shipping
@@ -89,7 +73,7 @@ function WhyChooseUs() {
             <div className="img-div why-choose-before relative z-10">
               <img
                 className="rounded-3xl"
-                src="./public/assets/images/why-choose-us-img.jpg"
+                src="public/why-choose-us-img.jpg"
                 alt=""
               />
             </div>

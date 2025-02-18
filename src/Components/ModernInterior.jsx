@@ -12,21 +12,21 @@ function ModernInterior() {
                   {" "}
                   <img
                     className="rounded-3xl"
-                    src="./public/assets/images/img-grid-1.jpg"
+                    src="public/img-grid-1.jpg"
                     alt=""
                   />
                 </div>
                 <div className="relative grid ps-4 col-start-9 col-end-13 row-start-1 row-end-6">
                   <img
                     className="rounded-3xl"
-                    src="./public/assets/images/img-grid-2.jpg"
+                    src="public/img-grid-2.jpg"
                     alt=""
                   />
                 </div>
                 <div className="relative grid pt-4 col-start-7 col-end-13 row-start-6 row-end-8">
                   <img
                     className="rounded-3xl"
-                    src="./public/assets/images/img-grid-3.jpg"
+                    src="public/img-grid-3.jpg"
                     alt=""
                   />
                 </div>
