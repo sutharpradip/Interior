@@ -1,8 +1,9 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import EditProfileForm from "../EditProfileForm";
 
 function Profile() {
   const [user, setUser] = useState(null);
+  const [editFormOpen, setEditFormOpen] = useState(false); // Correct state name
 
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
@@ -14,17 +15,27 @@ function Profile() {
   if (!user) {
     return <p>Loading...</p>;
   }
-  console.log(`user  = ${user.name}`);
+
+  const openEditForm = () => {
+    setEditFormOpen(true);
+  };
+
+  const closeEditForm = () => {
+    setEditFormOpen(false);
+  };
 
   return (
-    <div className=" ps-6 bg-gray-100">
+    <div className="ps-6 bg-gray-100">
       <h2 className="text-3xl font-semibold mb-6">My Profile</h2>
 
       {/* Personal Information */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-xl font-semibold">Personal Information</h3>
-          <button className="text-white bg-[#3b5d50] px-4 py-1 rounded-md">
+          <button
+            className="text-white bg-[#3b5d50] px-4 py-1 rounded-md"
+            onClick={openEditForm} // Added onClick event
+          >
             Edit
           </button>
         </div>
@@ -72,7 +83,10 @@ function Profile() {
           <strong>Password:</strong> ******
         </p>
         <div className="mt-4 flex gap-3">
-          <button className="text-white bg-[#3b5d50] px-4 py-1 rounded-md">
+          <button
+            onClick={openEditForm}
+            className="text-white bg-[#3b5d50] px-4 py-1 rounded-md"
+          >
             Edit
           </button>
           <button className="text-white bg-[#3b5d50] px-4 py-1 rounded-md">
@@ -80,6 +94,9 @@ function Profile() {
           </button>
         </div>
       </div>
+
+      {/* Edit Profile Modal */}
+      <EditProfileForm isOpen={editFormOpen} closeModal={closeEditForm} />
     </div>
   );
 }

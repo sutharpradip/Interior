@@ -5,6 +5,7 @@ import LoginModal from "../../Components/LoginModal";
 import RegisterModal from "../../Components/RegisterModal";
 // import { useCart } from "../../Context/CartContext";
 import { toast } from "react-toastify";
+import { img } from "framer-motion/client";
 // import { ToastContainer, toast } from "react-toastify";
 
 function Header() {
@@ -184,12 +185,44 @@ function Header() {
             </ul>
 
             <ul className="flex items-center mt-5 md:mt-0 relative">
+              <li className="mr-5">
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    `inline-flex items-center text-sm font-semibold ${
+                      isActive ? "text-yellow-400" : "text-white"
+                    } hover:text-yellow-300 duration-200`
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (loggedInUser) {
+                      // window.location.href = "/cart";
+                      navigate("/cart");
+                    } else {
+                      setIsLoginModalOpen(true);
+                    }
+                  }}
+                >
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </NavLink>
+              </li>
+
               <li className="">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="text-white text-sm font-semibold hover:text-yellow-300 duration-200"
                 >
-                  <i className="fa-solid fa-user"></i>
+                  {loggedInUser ? (
+                    <div className="avatar block object-cover w-7 h-7 rounded-full overflow-hidden ">
+                      <img
+                        className="block "
+                        src={loggedInUser.avatar}
+                        alt={loggedInUser.name}
+                      />
+                    </div>
+                  ) : (
+                    <i className="fa-solid fa-user"></i>
+                  )}
                 </button>
                 {isDropdownOpen && (
                   <div
@@ -241,28 +274,6 @@ function Header() {
                     </ul>
                   </div>
                 )}
-              </li>
-
-              <li className="ml-5">
-                <NavLink
-                  to="/cart"
-                  className={({ isActive }) =>
-                    `inline-flex items-center text-sm font-semibold ${
-                      isActive ? "text-yellow-400" : "text-white"
-                    } hover:text-yellow-300 duration-200`
-                  }
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (loggedInUser) {
-                      // window.location.href = "/cart";
-                      navigate("/cart");
-                    } else {
-                      setIsLoginModalOpen(true);
-                    }
-                  }}
-                >
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </NavLink>
               </li>
             </ul>
           </nav>

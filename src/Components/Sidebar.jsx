@@ -25,7 +25,7 @@ function Sidebar() {
           alt="Profile"
           className="rounded-full w-20 h-20"
         />
-        <h3 className="mt-3 font-semibold text-lg">Jitu Sir</h3>
+        <h3 className="mt-3 font-semibold text-lg">{user.name}</h3>
       </div>
 
       {/* Navigation Links */}
@@ -50,7 +50,10 @@ function Sidebar() {
       </ul>
 
       {/* Logout Button */}
-      <button className="w-full mt-6 py-2 bg-red-500 text-white rounded-md">
+      <button
+        onClick={() => localStorage.removeItem("loggedInUser")}
+        className="w-full mt-6 py-2 bg-red-500 text-white rounded-md"
+      >
         Logout
       </button>
     </div>
