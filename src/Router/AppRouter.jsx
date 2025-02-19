@@ -7,7 +7,8 @@ import Blog from "../Pages/Blogs";
 import ContactUs from "../Pages/ContactUs";
 import Cart from "../Pages/Cart";
 import UserDashboard from "../Pages/UserDashboard";
-import Profile from "../Components/Dashboard/Profile";
+import Profile from "../Components/UserAccount/Profile";
+import Checkout from "../Components/Checkout";
 
 export default function AppRouter() {
   return (
@@ -18,9 +19,11 @@ export default function AppRouter() {
       <Route path="/shop" element={<Shop />} />
       <Route path="/blogs" element={<Blog />} />
       <Route path="contact" element={<ContactUs />} />
-      <Route path="/cart" element={<Cart />} />
 
-      <Route path="/dashboard/*" element={<UserDashboard />}>
+      <Route path="/cart/*" element={<Cart />} />
+      <Route path="/checkout" element={<Checkout />} />
+
+      <Route path="/account/*" element={<UserDashboard />}>
         <Route path="profile" element={<Profile />} />
         <Route path="orders" element={<Profile />} />
         <Route path="wishlist" element={<Profile />} />

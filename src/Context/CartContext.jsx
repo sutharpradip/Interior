@@ -1,47 +1,43 @@
-import React from "react";
-import { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+import { useAuth } from "./UserAuth";
 
 const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
+  const { loggedInUser } = useAuth();
   const [cart, setCart] = useState([]);
-  const [loggedInUser, setLoggedInUser] = useState(null);
-
-  // Load user from localStorage when app starts
-  useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      setLoggedInUser(JSON.parse(storedUser));
-    }
-  }, []);
 
   // Fetch cart from db.json when user logs in
   useEffect(() => {
     if (loggedInUser) {
       fetch(`http://localhost:5000/users/${loggedInUser.id}`)
         .then((response) => response.json())
-        .then((user) => setCart(user.cart || []));
+        .then((user) => setCart(user.cart || []))
+        .catch((error) => console.error("Error fetching cart:", error));
+    } else {
+      setCart([]); 
     }
   }, [loggedInUser]);
 
-  // Update cart in db.json (debounced to prevent excessive requests)
   useEffect(() => {
-    if (loggedInUser) {
+    if (loggedInUser && cart.length > 0) {
       const timeout = setTimeout(() => {
         fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ cart }),
-        });
-      }, 1000); // Wait 1 second before sending update
+        }).catch((error) => console.error("Error updating cart:", error));
+      }, 1000);
 
       return () => clearTimeout(timeout);
     }
   }, [cart, loggedInUser]);
 
+  // Function to add item to cart
   const addToCart = (product) => {
     if (!loggedInUser) {
-      return alert("Please Login");
+      alert("Please login to add items to the cart.");
+      return;
     }
     setCart((prevCart) => {
       const existingItem = prevCart.find((item) => item.id === product.id);
@@ -56,11 +52,12 @@ export const CartProvider = ({ children }) => {
     });
   };
 
+  // Function to remove item from cart
   const removeFromCart = (id) => {
     setCart((prevCart) => prevCart.filter((item) => item.id !== id));
   };
 
-  // incresae items quantity in cart
+  // Increase item quantity in cart
   const increaseQuantity = (id) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -69,18 +66,19 @@ export const CartProvider = ({ children }) => {
     );
   };
 
-  // decrease items quantity in cart
+  // Decrease item quantity in cart
   const decreaseQuantity = (id) => {
-    setCart((prevCart) =>
-      prevCart
-        .map((item) =>
-          item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-        )
-        .filter((item) => item.quantity > 0)
+    setCart(
+      (prevCart) =>
+        prevCart
+          .map((item) =>
+            item.id === id ? { ...item, quantity: item.quantity - 1 } : item
+          )
+          .filter((item) => item.quantity > 0) // ✅ Remove items with quantity 0
     );
   };
 
-  // clear cart
+  // Clear cart
   const clearCart = () => setCart([]);
 
   return (
@@ -92,8 +90,6 @@ export const CartProvider = ({ children }) => {
         increaseQuantity,
         decreaseQuantity,
         clearCart,
-        setLoggedInUser,
-        loggedInUser,
       }}
     >
       {children}
@@ -101,4 +97,5 @@ export const CartProvider = ({ children }) => {
   );
 };
 
+// Custom hook to use CartContext
 export const useCart = () => useContext(CartContext);

@@ -3,10 +3,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
 import LoginModal from "../../Components/LoginModal";
 import RegisterModal from "../../Components/RegisterModal";
-// import { useCart } from "../../Context/CartContext";
 import { toast } from "react-toastify";
-import { img } from "framer-motion/client";
-// import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../../Context/UserAuth";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -14,28 +12,18 @@ function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      setLoggedInUser(JSON.parse(storedUser)); // Parse and set the logged-in user
-    }
-  }, [isLoginModalOpen]);
+  const { logout, loggedInUser } = useAuth();
 
   // Handle logout
   const handleLogout = () => {
     toast.warn(`${loggedInUser.name} is logged Out`);
-    localStorage.removeItem("loggedInUser");
-    setLoggedInUser(null);
+    logout();
     setIsDropdownOpen(false);
-    window.location.reload();
   };
-
-  // useEffect(() => {}, [loggedInUser]);
 
   const handleLoginClick = () => {
     setIsLoginModalOpen(true);
@@ -196,7 +184,6 @@ function Header() {
                   onClick={(e) => {
                     e.preventDefault();
                     if (loggedInUser) {
-                      // window.location.href = "/cart";
                       navigate("/cart");
                     } else {
                       setIsLoginModalOpen(true);
@@ -213,7 +200,7 @@ function Header() {
                   className="text-white text-sm font-semibold hover:text-yellow-300 duration-200"
                 >
                   {loggedInUser ? (
-                    <div className="avatar block object-cover w-7 h-7 rounded-full overflow-hidden ">
+                    <div className="avatar flex object-cover w-7 h-7 rounded-full overflow-hidden ">
                       <img
                         className="block "
                         src={loggedInUser.avatar}
@@ -236,7 +223,7 @@ function Header() {
                           : "Please login"} */}
 
                         {loggedInUser ? (
-                          <NavLink to="/dashboard">{loggedInUser.name}</NavLink>
+                          <NavLink to="/account">{loggedInUser.name}</NavLink>
                         ) : (
                           "Please Login"
                         )}

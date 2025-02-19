@@ -23,7 +23,7 @@ function RegisterModal({ isRegisterOpen, onClose }) {
     }
 
     // Generate avatar URL (using a random avatar generation service)
-    const avatarUrl = `https://avatars.dicebear.com/api/avataaars/${uuidv4()}.svg`;
+    const avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg`;
 
     // create new user
     const newUser = {

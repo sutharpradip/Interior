@@ -6,17 +6,23 @@ import Footer from "./Common_Components/Footer/Footer";
 import AppRouter from "./Router/AppRouter";
 import { CartProvider } from "./Context/CartContext";
 import { ToastContainer } from "react-toastify";
+import { UserProvider } from "./Context/UserAuth";
+import { PaymentProvider } from "./Context/PaymentContext";
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <ToastContainer position="top-right" autoClose={2000} />
-        <Header />
-        <AppRouter />
-        <Footer />
-      </Router>
-    </CartProvider>
+    <UserProvider>
+      <CartProvider>
+        <PaymentProvider>
+          <Router>
+            <ToastContainer position="top-right" autoClose={1000} />
+            <Header />
+            <AppRouter />
+            <Footer />
+          </Router>
+        </PaymentProvider>
+      </CartProvider>
+    </UserProvider>
   );
 }
 

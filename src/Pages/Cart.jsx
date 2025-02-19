@@ -3,20 +3,25 @@ import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import CartItemCard from "../Components/CartItemCard";
 import { useCart } from "../Context/CartContext";
+import { usePayment } from "../Context/PaymentContext";
 
 function Cart() {
   const { cart } = useCart();
+  const { handlePayment } = usePayment();
 
-  useEffect(() => {
-    console.log("Cart Updated:", cart);
-  });
+  // useEffect(() => {
+  //   console.log("Cart Updated:", cart);
+  // });
 
   // Calculate total items
-  const totalItems = (cart || []).reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = (cart || []).reduce(
+    (prev, item) => prev + item.quantity,
+    0
+  );
 
   // Calculate cart total price
   const cartTotalPrice = (cart || []).reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (prev, item) => prev + item.price * item.quantity,
     0
   );
 
@@ -85,7 +90,11 @@ function Cart() {
               </div>
 
               <div className="flex flex-col gap-2 text-center mt-4">
-                <Link className="bg-green-800 text-white w-full p-2 inline-block rounded-md">
+                <Link
+                  // onClick={() => handlePayment()}
+                  to="/checkout"
+                  className="bg-green-800 text-white w-full p-2 inline-block rounded-md"
+                >
                   Proceed to Checkout
                 </Link>
 

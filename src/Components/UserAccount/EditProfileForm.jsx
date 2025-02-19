@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useAuth } from "../../Context/UserAuth";
 
 const EditProfileForm = ({ isOpen, closeModal }) => {
   const [userData, setUserData] = useState({
@@ -11,6 +12,7 @@ const EditProfileForm = ({ isOpen, closeModal }) => {
   });
 
   const [userId, setUserId] = useState(null);
+  const { setLoggedInUser } = useAuth();
 
   useEffect(() => {
     const storedUser = localStorage.getItem("loggedInUser");
@@ -65,9 +67,10 @@ const EditProfileForm = ({ isOpen, closeModal }) => {
       .then((updatedUser) => {
         console.log("User updated successfully:", updatedUser);
         localStorage.setItem("loggedInUser", JSON.stringify(updatedUser)); // Update localStorage
+        setLoggedInUser(updatedUser);
         closeModal();
         toast.success("Profile Updated");
-        window.location.reload();
+        // window.location.reload();
       })
       .catch((error) => console.error("Error updating user:", error));
   };
@@ -75,12 +78,12 @@ const EditProfileForm = ({ isOpen, closeModal }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+    <div className="fixed fade  z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
       <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-lg">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Edit Personal Information</h2>
           <button
-            className="text-gray-600 w-7 h-7 rounded-md bg-gray-200 hover:text-gray-800"
+            className="text-gray-600 w-7 h-7 rounded-md bg-gray-200 hover:bg-green-950 hover:text-white"
             onClick={closeModal}
           >
             <i className="fa-solid fa-times"></i>

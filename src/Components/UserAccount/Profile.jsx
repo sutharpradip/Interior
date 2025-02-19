@@ -1,19 +1,16 @@
-import React, { useEffect, useState } from "react";
-import EditProfileForm from "../EditProfileForm";
+import React, { useState } from "react";
+import EditProfileForm from "./EditProfileForm";
+import { useAuth } from "../../Context/UserAuth";
 
 function Profile() {
-  const [user, setUser] = useState(null);
-  const [editFormOpen, setEditFormOpen] = useState(false); // Correct state name
+  const [editFormOpen, setEditFormOpen] = useState(false);
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+  const { loggedInUser } = useAuth();
 
-  if (!user) {
-    return <p>Loading...</p>;
+  if (!loggedInUser) {
+    return (
+      <h2 className="text-center text-2xl font-semibold">please login...</h2>
+    );
   }
 
   const openEditForm = () => {
@@ -25,7 +22,7 @@ function Profile() {
   };
 
   return (
-    <div className="ps-6 bg-gray-100">
+    <div className=" ms-6 p-6 rounded-lg shadow-sm bg-gray-100">
       <h2 className="text-3xl font-semibold mb-6">My Profile</h2>
 
       {/* Personal Information */}
@@ -40,22 +37,27 @@ function Profile() {
           </button>
         </div>
         <div className="space-y-5">
-          <p>
-            <strong>Name:</strong> {user.name}
-          </p>
-          <p>
-            <strong>Mobile Number:</strong> {user.phone}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
+          <div className="flex">
+            <p className="font-semibold w-1/5">Name:</p>
+            <span className="font-normal"> {loggedInUser.name}</span>
+          </div>
+
+          <div className="flex">
+            <p className="font-semibold w-1/5">Mobile Number:</p>
+            <span className="font-normal"> {loggedInUser.phone}</span>
+          </div>
+          <div className="flex">
+            <p className="font-semibold w-1/5">Email:</p>
+            <span className="font-normal">{loggedInUser.email}</span>
+          </div>
+
           <div className="flex items-center">
-            <strong className="mr-2">Gender:</strong>
+            <p className=" font-semibold w-1/5">Gender:</p>
             <label className="flex items-center mr-4">
               <input
                 type="radio"
                 readOnly
-                checked={user.gender === "male"}
+                checked={loggedInUser.gender === "male"}
                 className="form-radio text-[#3b5d50] mr-2"
               />
               Male
@@ -64,7 +66,7 @@ function Profile() {
               <input
                 type="radio"
                 readOnly
-                checked={user.gender === "female"}
+                checked={loggedInUser.gender === "female"}
                 className="form-radio text-[#3b5d50] mr-2"
               />
               Female
@@ -76,19 +78,18 @@ function Profile() {
       {/* Login Details */}
       <div className="bg-white p-6 space-y-5 rounded-lg shadow-md mt-6">
         <h3 className="text-xl font-semibold mb-4">Login Details</h3>
-        <p>
-          <strong>Email:</strong> {user.email}
-        </p>
-        <p>
-          <strong>Password:</strong> ******
-        </p>
+
+        <div className="flex">
+          <p className="w-1/5 font-semibold">Email:</p>
+          <span> {loggedInUser.email}</span>
+        </div>
+
+        <div className="flex">
+          <p className="w-1/5 font-semibold">Password:</p>
+          <span>******</span>
+        </div>
+
         <div className="mt-4 flex gap-3">
-          <button
-            onClick={openEditForm}
-            className="text-white bg-[#3b5d50] px-4 py-1 rounded-md"
-          >
-            Edit
-          </button>
           <button className="text-white bg-[#3b5d50] px-4 py-1 rounded-md">
             Change
           </button>
