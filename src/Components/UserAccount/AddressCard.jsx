@@ -19,7 +19,7 @@ function Address({ address, onEdit, onRemove }) {
             <div className="flex gap-4">
               <p className="font-semibold">Address:</p>
               <span>
-                {address.fullAddress}, {address.city} {address.state}{" "}
+                {address.fullAddress}, {address.city}, {address.state},{" "}
                 {address.country}
               </span>
             </div>

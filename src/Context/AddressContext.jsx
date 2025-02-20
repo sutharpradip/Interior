@@ -5,11 +5,10 @@ import { toast } from "react-toastify";
 const AddressContext = createContext();
 
 export const AddressProvider = ({ children }) => {
-  const [addresses, setAddresses] = useState(null);
-
+  const [addresses, setAddresses] = useState([]);
   const { loggedInUser } = useAuth();
 
-  //   Fetch addresses from Db.json
+  // Fetch addresses from DB
   useEffect(() => {
     if (!loggedInUser) return;
 
@@ -19,80 +18,65 @@ export const AddressProvider = ({ children }) => {
       .catch((error) => console.error("Error fetching addresses:", error));
   }, [loggedInUser]);
 
-  // add new or update address
-  const addUpdateAddress = async (newAddress) => {
+  // Add New Address
+  const addAddress = async (newAddress) => {
     if (!loggedInUser) return;
 
     try {
-      const response = await fetch(
-        `http://localhost:5000/users/${loggedInUser.id}`
-      );
-      const userData = await response.json();
-
-      let updatedAddresses;
-      const existingIndex = userData.addresses.findIndex(
-        (addr) => addr.id === newAddress.id
-      );
-
-      if (existingIndex > -1) {
-        // Update existing address
-        updatedAddresses = [...userData.addresses];
-        updatedAddresses[existingIndex] = newAddress;
-        toast.success("Address updated successfully!"); // ✅ Show correct toast
-      } else {
-        // Add new address
-        updatedAddresses = [...userData.addresses, newAddress];
-        toast.success("Added new Address"); // ✅ Correct toast for new address
-      }
-
-      // Update db.json
-      await fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...userData, addresses: updatedAddresses }),
-      });
-
-      setAddresses(updatedAddresses);
+      const updatedAddresses = [...addresses, newAddress];
+      await updateUserAddresses(updatedAddresses);
+      toast.success("New address added!");
     } catch (error) {
-      console.error("Error updating address:", error);
+      toast.error("Failed to add address.");
+    }
+  };
+
+  // Edit Existing Address
+  const editAddress = async (updatedAddress) => {
+    if (!loggedInUser) return;
+
+    try {
+      const updatedAddresses = addresses.map((addr) =>
+        addr.id === updatedAddress.id ? updatedAddress : addr
+      );
+      await updateUserAddresses(updatedAddresses);
+      toast.success("Address updated successfully!");
+    } catch (error) {
       toast.error("Failed to update address.");
     }
   };
 
+  // Remove Address
   const removeAddress = async (id) => {
     if (!loggedInUser) return;
 
     try {
-      // Fetch the current user data
-      const response = await fetch(
-        `http://localhost:5000/users/${loggedInUser.id}`
-      );
-      const userData = await response.json();
-
-      // Filter out the removed address
-      const updatedAddresses = userData.addresses.filter(
-        (addr) => addr.id !== id
-      );
-
-      // Update db.json
-      await fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...userData, addresses: updatedAddresses }),
-      });
-
-      // Update state
-      setAddresses(updatedAddresses);
+      const updatedAddresses = addresses.filter((addr) => addr.id !== id);
+      await updateUserAddresses(updatedAddresses);
       toast.success("Address removed successfully!");
     } catch (error) {
-      console.error("Error removing address:", error);
       toast.error("Failed to remove address.");
     }
   };
 
+  // Helper to Update DB
+  const updateUserAddresses = async (updatedAddresses) => {
+    const response = await fetch(
+      `http://localhost:5000/users/${loggedInUser.id}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...loggedInUser, addresses: updatedAddresses }),
+      }
+    );
+
+    if (!response.ok) throw new Error("Failed to update DB");
+    setAddresses(updatedAddresses);
+  };
+
   return (
     <AddressContext.Provider
-      value={{ addresses, addUpdateAddress, removeAddress }}
+      value={{ addresses, addAddress, editAddress, removeAddress }}
     >
       {children}
     </AddressContext.Provider>

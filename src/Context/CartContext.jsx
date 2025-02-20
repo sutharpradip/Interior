@@ -15,7 +15,7 @@ export const CartProvider = ({ children }) => {
         .then((user) => setCart(user.cart || []))
         .catch((error) => console.error("Error fetching cart:", error));
     } else {
-      setCart([]); 
+      setCart([]);
     }
   }, [loggedInUser]);
 
@@ -54,7 +54,20 @@ export const CartProvider = ({ children }) => {
 
   // Function to remove item from cart
   const removeFromCart = (id) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id));
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item.id !== id);
+
+      // ✅ Update db.json after removing the item
+      if (loggedInUser) {
+        fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ cart: updatedCart }),
+        }).catch((error) => console.error("Error updating cart:", error));
+      }
+
+      return updatedCart;
+    });
   };
 
   // Increase item quantity in cart

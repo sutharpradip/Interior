@@ -1,17 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import AddressCard from "./UserAccount/AddressCard";
 import { useAddress } from "../Context/AddressContext";
 import { useAuth } from "../Context/UserAuth";
 import AddressForm from "./UserAccount/AddressForm";
+import { useCart } from "../Context/CartContext";
 
 const Checkout = () => {
   const [selectedAddress, setSelectedAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
   const [AddrFormOpen, setAddrFormOpen] = useState(false);
+  const { cart } = useCart();
 
   const handlePayment = (event) => {
     setPaymentMethod(event.target.value);
   };
+
+  const { subtotal, shipping, tax, coupon, totalPayable } = useMemo(() => {
+    const subtotal = cart?.reduce(
+      (prev, item) => prev + item.price * item.quantity,
+      0
+    );
+
+    const shipping = subtotal > 100 ? 0 : 10; // Free shipping over $100
+    const tax = +(subtotal * 0.1).toFixed(2); // 10% tax
+    const coupon = subtotal > 50 ? 5 : 0; // $5 off if subtotal > $50
+    const totalPayable = subtotal + shipping + tax - coupon;
+
+    return { subtotal, shipping, tax, coupon, totalPayable };
+  }, [cart]);
 
   return (
     <div className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto p-4 lg:p-8">
@@ -71,16 +87,18 @@ const Checkout = () => {
       <div className=" w-full md:w-2/6 bg-white shadow-lg rounded-xl p-6 ml-0 lg:ml-6">
         <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
         <div className="space-y-4">
-          {[...Array(5)].map((_, index) => (
+          {cart?.map((item, index) => (
             <div
               key={index}
               className="flex items-center justify-between border-b pb-2"
             >
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-gray-200 rounded-lg"></div>
-                <p>Jugadi Vadapau</p>
+                <div className="w-12 h-12 bg-gray-200 rounded-lg">
+                  <img src={item.image} alt="" />
+                </div>
+                <p>{item.name}</p>
               </div>
-              <p className="font-semibold">$35.00</p>
+              <p className="font-semibold">${item.price}</p>
             </div>
           ))}
         </div>
@@ -88,27 +106,31 @@ const Checkout = () => {
         <div className="mt-4 border-t pt-4">
           <div className="flex justify-between text-gray-700">
             <p>Subtotal</p>
-            <p>$35.00</p>
+            <p>${subtotal.toFixed(2)}</p>
           </div>
           <div className="flex justify-between text-gray-700">
             <p>Shipping</p>
-            <p>$35.00</p>
+            <p>${shipping.toFixed(2)}</p>
           </div>
           <div className="flex justify-between text-gray-700">
-            <p>Tax</p>
-            <p>$35.00</p>
+            <p>Tax (10%)</p>
+            <p>${tax.toFixed(2)}</p>
           </div>
           <div className="flex justify-between text-[rgb(59,93,80)] font-semibold">
             <p>Coupon</p>
-            <p>-$35.00</p>
+            <p>-${coupon.toFixed(2)}</p>
           </div>
         </div>
 
+        {/* 🧾 Total Payable */}
         <div className="mt-4 border-t pt-4 flex justify-between font-semibold text-lg">
           <p>Total Payable</p>
-          <p>$35.00</p>
+          <p>${totalPayable.toFixed(2)}</p>
         </div>
-        <button className="w-full mt-4 bg-[rgb(59,93,80)] text-white py-3 rounded-lg">
+        <button
+          onClick={handlePayment}
+          className="w-full mt-4 bg-[rgb(59,93,80)] text-white py-3 rounded-lg"
+        >
           Place Order
         </button>
       </div>

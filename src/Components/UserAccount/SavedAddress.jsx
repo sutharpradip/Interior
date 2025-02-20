@@ -6,13 +6,19 @@ import { useAuth } from "../../Context/UserAuth";
 
 function SavedAddress() {
   const { loggedInUser } = useAuth();
-  const { addresses, addUpdateAddress, removeAddress } = useAddress();
+  const { addresses, addAddress, editAddress, removeAddress } = useAddress();
   const [AddrFormOpen, setAddrFormOpen] = useState(false);
+  const [editingAddress, setEditingAddress] = useState(null);
 
   if (!loggedInUser) return <div>Loading...</div>;
 
+  const handleAdd = () => {
+    setEditingAddress(null);
+    setAddrFormOpen(true);
+  };
+
   const handleEdit = (address) => {
-    addUpdateAddress(address);
+    setEditingAddress(address);
     setAddrFormOpen(true);
   };
 
@@ -25,22 +31,20 @@ function SavedAddress() {
       <div className="ms-6 p-6 rounded-lg shadow-sm bg-gray-100">
         <div className="flex justify-between items-center">
           <h2 className="text-3xl font-semibold mb-6">
-            {addresses && addresses.length > 0
-              ? "Saved Addresses"
-              : "No Saved Addresses"}
+            {addresses.length > 0 ? "Saved Addresses" : "No Saved Addresses"}
           </h2>
           <button
-            onClick={() => setAddrFormOpen(true)}
+            onClick={handleAdd}
             className="bg-gray-200 hover:bg-[#3b5d50] text-gray-800 hover:text-white py-2 px-5 rounded-md"
           >
             Add New Address
           </button>
         </div>
 
-        {addresses && addresses.length > 0 ? (
+        {addresses.length > 0 ? (
           <div className="flex flex-wrap justify-between">
-            {addresses.map((address, index) => (
-              <div key={index} className="w-full lg:w-[49%]">
+            {addresses.map((address) => (
+              <div key={address.id} className="w-full lg:w-[49%]">
                 <AddressCard
                   address={address}
                   onEdit={handleEdit}
@@ -56,10 +60,14 @@ function SavedAddress() {
         )}
       </div>
 
-      {/* Ensure AddressForm always renders */}
+      {/* Address Form */}
       <AddressForm
-        isFormOpen={AddrFormOpen}
+        existingAddress={editingAddress}
         onClose={() => setAddrFormOpen(false)}
+        isFormOpen={AddrFormOpen}
+        onSave={(address) => {
+          editingAddress ? editAddress(address) : addAddress(address);
+        }}
       />
     </>
   );
