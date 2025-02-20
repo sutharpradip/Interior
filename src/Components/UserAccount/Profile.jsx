@@ -22,7 +22,7 @@ function Profile() {
   };
 
   return (
-    <div className=" ms-6 p-6 rounded-lg shadow-sm bg-gray-100">
+    <div className="p-6 rounded-lg shadow-sm bg-gray-100">
       <h2 className="text-3xl font-semibold mb-6">My Profile</h2>
 
       {/* Personal Information */}
@@ -37,22 +37,22 @@ function Profile() {
           </button>
         </div>
         <div className="space-y-5">
-          <div className="flex">
-            <p className="font-semibold w-1/5">Name:</p>
+          <div className="flex flex-wrap">
+            <p className="font-semibold w-full md:w-1/5">Name:</p>
             <span className="font-normal"> {loggedInUser.name}</span>
           </div>
 
-          <div className="flex">
-            <p className="font-semibold w-1/5">Mobile Number:</p>
-            <span className="font-normal"> {loggedInUser.phone}</span>
+          <div className="flex flex-wrap">
+            <p className="font-semibold w-full md:w-1/5">Mobile Number:</p>
+            <span className="font-normal "> {loggedInUser.phone}</span>
           </div>
-          <div className="flex">
-            <p className="font-semibold w-1/5">Email:</p>
+          <div className="flex flex-wrap">
+            <p className="font-semibold w-full md:w-1/5">Email:</p>
             <span className="font-normal">{loggedInUser.email}</span>
           </div>
 
-          <div className="flex items-center">
-            <p className=" font-semibold w-1/5">Gender:</p>
+          <div className="flex items-center flex-wrap">
+            <p className=" font-semibold w-full md:w-1/5">Gender:</p>
             <label className="flex items-center mr-4">
               <input
                 type="radio"

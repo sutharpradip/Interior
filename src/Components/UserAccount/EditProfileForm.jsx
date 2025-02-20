@@ -78,8 +78,11 @@ const EditProfileForm = ({ isOpen, closeModal }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed fade  z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
-      <div className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-lg">
+    <div className="fixed  z-50 inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4">
+      <div
+        className="bg-white rounded-lg p-6 w-full max-w-2xl shadow-lg"
+        data-aos="fade-down"
+      >
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl font-semibold">Edit Personal Information</h2>
           <button

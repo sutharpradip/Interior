@@ -14,7 +14,6 @@ function RegisterModal({ isRegisterOpen, onClose }) {
     const users = await response.json();
 
     // check existing user
-
     const existingUser = users.find((user) => user.email === email);
 
     if (existingUser) {
@@ -34,7 +33,9 @@ function RegisterModal({ isRegisterOpen, onClose }) {
       password,
       avatar: avatarUrl,
       gender,
+      addresses: [],
       cart: [],
+      orders: [],
     };
 
     // save new user
@@ -46,14 +47,17 @@ function RegisterModal({ isRegisterOpen, onClose }) {
       body: JSON.stringify(newUser),
     });
 
-    onClose();
+    onClose(); //close th modal
     toast.success(`Registred as ${name}`);
   };
 
   return (
     isRegisterOpen && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        <div
+          className="bg-white p-6 rounded-lg shadow-lg w-96"
+          data-aos="fade-down"
+        >
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Register</h2>
           <input
             type="text"

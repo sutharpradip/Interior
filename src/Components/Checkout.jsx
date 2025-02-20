@@ -1,8 +1,13 @@
 import React, { useState } from "react";
+import AddressCard from "./UserAccount/AddressCard";
+import { useAddress } from "../Context/AddressContext";
+import { useAuth } from "../Context/UserAuth";
+import AddressForm from "./UserAccount/AddressForm";
 
 const Checkout = () => {
-  const [selectedAddress, setSelectedAddress] = useState("home");
+  const [selectedAddress, setSelectedAddress] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("");
+  const [AddrFormOpen, setAddrFormOpen] = useState(false);
 
   const handlePayment = (event) => {
     setPaymentMethod(event.target.value);
@@ -13,49 +18,19 @@ const Checkout = () => {
       {/* Delivery Address Section */}
       <div className="w-full md:w-8/12 bg-gray-100 rounded-xl p-6 mb-6 lg:mb-0">
         <h2 className="text-xl font-semibold mb-4">Delivery Address</h2>
+        <button onClick={() => setAddrFormOpen(true)}>Add New Address</button>
 
-        <div className="flex flex-col gap-5">
-          <div className="flex  flex-col md:flex-row gap-4">
+        <div className="flex flex-col gap-8">
+          <div className="flex flex-wrap flex-col md:flex-row justify-between">
             <div
-              className={`border bg-white p-4 rounded-lg cursor-pointer flex items-center justify-between ${
+              className={`border w-full lg:w-[49%] rounded-lg cursor-pointer flex items-center justify-between ${
                 selectedAddress === "home"
                   ? "border-[rgb(59,93,80)]"
                   : "border-gray-300"
               }`}
               onClick={() => setSelectedAddress("home")}
             >
-              <div className="">
-                <p className="font-medium">Prateek Solanki</p>
-                <p className="text-sm text-gray-600">
-                  A-605, Ship Aaron, Sindhu Bhawan Road, Ahmedabad
-                </p>
-                <p className="text-sm text-gray-600">Pin Code: 380059</p>
-                <p className="text-sm text-gray-600">Phone: +91 1234567890</p>
-              </div>
-              <span className="text-white bg-[rgb(59,93,80)] px-2 py-1 rounded-md text-xs">
-                Home
-              </span>
-            </div>
-
-            <div
-              className={`border bg-white p-4 rounded-lg cursor-pointer flex items-center justify-between ${
-                selectedAddress === "office"
-                  ? "border-[rgb(59,93,80)]"
-                  : "border-gray-300"
-              }`}
-              onClick={() => setSelectedAddress("office")}
-            >
-              <div>
-                <p className="font-medium">Prateek Solanki</p>
-                <p className="text-sm text-gray-600">
-                  A-605, Ship Aaron, Sindhu Bhawan Road, Ahmedabad
-                </p>
-                <p className="text-sm text-gray-600">Pin Code: 380059</p>
-                <p className="text-sm text-gray-600">Phone: +91 1234567890</p>
-              </div>
-              <span className="text-white bg-[rgb(59,93,80)] px-2 py-1 rounded-md text-xs">
-                Office
-              </span>
+              <AddressCard />
             </div>
           </div>
 
@@ -137,6 +112,11 @@ const Checkout = () => {
           Place Order
         </button>
       </div>
+
+      <AddressForm
+        isFormOpen={AddrFormOpen}
+        onClose={() => setAddrFormOpen(false)}
+      />
     </div>
   );
 };

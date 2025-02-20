@@ -40,7 +40,7 @@ function Orders() {
   }
 
   return (
-    <div className="ms-6 p-6 rounded-lg shadow-sm bg-gray-100">
+    <div className=" p-6 rounded-lg shadow-sm bg-gray-100">
       <h2 className="text-xl font-semibold mb-4">My Orders</h2>
       <div className="flex flex-col gap-5">
         {loading ? (

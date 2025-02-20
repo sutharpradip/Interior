@@ -2,72 +2,40 @@
   "users": [
     {
       "id": "63d306ae-fc5a-47ac-8631-63e7b3db01e5",
-      "name": "kartik",
+      "name": "Kartik Patel",
       "email": "kartik@mail.com",
       "phone": "1234567890",
       "password": "1234",
       "avatar": "https://api.dicebear.com/9.x/lorelei/svg",
       "gender": "male",
-      "cart": [
+      "addresses": [
         {
-          "id": "10",
-          "name": "Bed-3",
-          "price": "50.00",
-          "image": "public/Bed-3.png",
-          "quantity": 1
-        }
-      ],
-      "orders": [
-        {
-          "id": 1739960090164,
-          "items": [
-            {
-              "id": "3",
-              "name": "chair 3",
-              "price": "50.00",
-              "image": "public/chair_3.png",
-              "quantity": 1
-            }
-          ],
-          "totalAmount": 50,
-          "paymentId": "pay_PxX46h0yQNfrou",
-          "status": "Paid",
-          "date": "2025-02-19T10:14:50.164Z"
+          "id": "1740054537790",
+          "name": "Pradeep suthar",
+          "type": "home",
+          "fullAddress": "Sirohi",
+          "country": "India",
+          "state": "Gujarat",
+          "city": "Ahmedabad",
+          "pincode": "307801",
+          "phone": "1234567890",
+          "alternatePhone": "1234568790"
         },
         {
-          "id": 1739960572556,
-          "items": [
-            {
-              "id": "1",
-              "name": "chair 1",
-              "price": "50.00",
-              "image": "public/chair_1.png",
-              "quantity": 1
-            },
-            {
-              "id": "2",
-              "name": "chair 2",
-              "price": "50.00",
-              "image": "public/chair_2.png",
-              "quantity": 1
-            }
-          ],
-          "totalAmount": 100,
-          "paymentId": "pay_PxXCbQL9KM8C0X",
-          "status": "Paid",
-          "date": "2025-02-19T10:22:52.556Z"
+          "id": "1740054592048",
+          "name": "Kartik Patel",
+          "type": "home",
+          "fullAddress": "Sindhu Bhawan",
+          "country": "India",
+          "state": "Gujarat",
+          "city": "Ahmedabad",
+          "pincode": "307801",
+          "phone": "1234567890",
+          "alternatePhone": "1234568790"
         }
-      ]
-    },
-    {
-      "id": "c667424d-0333-4fce-b221-ad7916ea33b8",
-      "name": "Vh Vhaudhary",
-      "email": "vh@gmail.com",
-      "phone": "1234567890",
-      "password": "1234",
-      "avatar": "https://api.dicebear.com/9.x/lorelei/svg",
-      "gender": "male",
-      "cart": []
+      ],
+      "cart": [],
+      "orders": []
     }
   ]
 }
