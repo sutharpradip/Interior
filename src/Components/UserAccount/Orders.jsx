@@ -13,7 +13,7 @@ function Orders() {
 
       try {
         const response = await fetch(
-          `http://localhost:5000/users/${loggedInUser.id}`
+          `https://interior-db.onrender.com/users/${loggedInUser.id}`
         );
         if (response.ok) {
           const updatedUser = await response.json();

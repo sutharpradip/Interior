@@ -12,7 +12,7 @@ export const AddressProvider = ({ children }) => {
   useEffect(() => {
     if (!loggedInUser) return;
 
-    fetch(`http://localhost:5000/users/${loggedInUser.id}`)
+    fetch(`https://interior-db.onrender.com/users/${loggedInUser.id}`)
       .then((response) => response.json())
       .then((data) => setAddresses(data.addresses || []))
       .catch((error) => console.error("Error fetching addresses:", error));
@@ -62,7 +62,7 @@ export const AddressProvider = ({ children }) => {
   // Helper to Update DB
   const updateUserAddresses = async (updatedAddresses) => {
     const response = await fetch(
-      `http://localhost:5000/users/${loggedInUser.id}`,
+      `https://interior-db.onrender.com/users/${loggedInUser.id}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },

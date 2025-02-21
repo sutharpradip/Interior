@@ -10,7 +10,7 @@ export const CartProvider = ({ children }) => {
   // Fetch cart from db.json when user logs in
   useEffect(() => {
     if (loggedInUser) {
-      fetch(`http://localhost:5000/users/${loggedInUser.id}`)
+      fetch(`https://interior-db.onrender.com/users/${loggedInUser.id}`)
         .then((response) => response.json())
         .then((user) => setCart(user.cart || []))
         .catch((error) => console.error("Error fetching cart:", error));
@@ -22,7 +22,7 @@ export const CartProvider = ({ children }) => {
   useEffect(() => {
     if (loggedInUser && cart.length > 0) {
       const timeout = setTimeout(() => {
-        fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
+        fetch(`https://interior-db.onrender.com/users/${loggedInUser.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ cart }),
@@ -59,7 +59,7 @@ export const CartProvider = ({ children }) => {
 
       // ✅ Update db.json after removing the item
       if (loggedInUser) {
-        fetch(`http://localhost:5000/users/${loggedInUser.id}`, {
+        fetch(`https://interior-db.onrender.com/users/${loggedInUser.id}`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ cart: updatedCart }),

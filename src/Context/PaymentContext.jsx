@@ -19,7 +19,7 @@ export const PaymentProvider = ({ children }) => {
     try {
       // Fetch the latest user data from db.json
       const response = await fetch(
-        `http://localhost:5000/users/${loggedInUser.id}`
+        `https://interior-db.onrender.com/users/${loggedInUser.id}`
       );
       if (!response.ok) {
         toast.error("Error fetching user data");
@@ -82,11 +82,14 @@ export const PaymentProvider = ({ children }) => {
             };
 
             // Update user in db.json
-            await fetch(`http://localhost:5000/users/${latestUser.id}`, {
-              method: "PATCH",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(updatedUser),
-            });
+            await fetch(
+              `https://interior-db.onrender.com/users/${latestUser.id}`,
+              {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(updatedUser),
+              }
+            );
 
             // Save to local storage & update state
             localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));

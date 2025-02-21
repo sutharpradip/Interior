@@ -10,7 +10,7 @@ function RegisterModal({ isRegisterOpen, onClose }) {
   const [gender, setGender] = useState("");
 
   const handleRegister = async () => {
-    const response = await fetch("http://localhost:5000/users");
+    const response = await fetch("https://interior-db.onrender.com/users");
     const users = await response.json();
 
     // check existing user
@@ -39,7 +39,7 @@ function RegisterModal({ isRegisterOpen, onClose }) {
     };
 
     // save new user
-    await fetch("http://localhost:5000/users", {
+    await fetch("https://interior-db.onrender.com/users", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

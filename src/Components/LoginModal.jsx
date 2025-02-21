@@ -10,7 +10,7 @@ function LoginModal({ isOpen, onClose }) {
   const { login } = useAuth();
 
   const handleLogin = async () => {
-    const response = await fetch("http://localhost:5000/users");
+    const response = await fetch("https://interior-db.onrender.com/users");
     const users = await response.json();
 
     const user = users.find(

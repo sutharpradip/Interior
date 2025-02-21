@@ -23,7 +23,7 @@ const EditProfileForm = ({ isOpen, closeModal }) => {
         setUserId(user.id); // Set userId in state
 
         // Fetch user details
-        fetch(`http://localhost:5000/users/${user.id}`)
+        fetch(`https://interior-db.onrender.com/users/${user.id}`)
           .then((response) => response.json())
           .then((data) => setUserData(data))
           .catch((error) => console.error("Error fetching user data:", error));
@@ -56,7 +56,7 @@ const EditProfileForm = ({ isOpen, closeModal }) => {
       return;
     }
 
-    fetch(`http://localhost:5000/users/${userId}`, {
+    fetch(`https://interior-db.onrender.com/users/${userId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
