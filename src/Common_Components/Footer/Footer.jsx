@@ -50,7 +50,7 @@ function Footer() {
           </div>
 
           <div className="w-full md:block hidden static lg:absolute right-0 lg:bottom-[-6rem] md:w-2/6 p-5">
-            <img className="" src="public/footer-sofa.png" alt="" />
+            <img className="" src="/footer-sofa.png" alt="" />
           </div>
         </div>
 

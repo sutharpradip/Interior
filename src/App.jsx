@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import "./App.css";
 import "aos/dist/aos.css";
 import AOS from "aos";
-import { BrowserRouter as Router } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import Header from "./Common_Components/Header/Header";
 import Footer from "./Common_Components/Footer/Footer";
 import AppRouter from "./Router/AppRouter";

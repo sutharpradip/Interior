@@ -2,7 +2,7 @@ export const products = [
   {
     id: "1",
     name: "chair 1",
-    image: "/chair_1.png",
+    image: "/Chair_1.png",
     price: "50.00",
     category: "chair",
   },
@@ -10,7 +10,7 @@ export const products = [
   {
     id: "2",
     name: "chair 2",
-    image: "/chair_2.png",
+    image: "/Chair_2.png",
     price: "50.00",
     category: "chair",
   },
@@ -18,7 +18,7 @@ export const products = [
   {
     id: "3",
     name: "chair 3",
-    image: "/chair_3.png",
+    image: "/Chair_3.png",
     price: "50.00",
     category: "chair",
   },
@@ -26,7 +26,7 @@ export const products = [
   {
     id: "4",
     name: "chair 4",
-    image: "/chair_4.png",
+    image: "/Chair_4.png",
     price: "50.00",
     category: "chair",
   },
@@ -34,7 +34,7 @@ export const products = [
   {
     id: "5",
     name: "chair 5",
-    image: "/chair_5.png",
+    image: "/Chair_5.png",
     price: "50.00",
     category: "chair",
   },
@@ -42,7 +42,7 @@ export const products = [
   {
     id: "6",
     name: "chair 6",
-    image: "/chair_6.png",
+    image: "/Chair_6.png",
     price: "50.00",
     category: "chair",
   },
@@ -50,7 +50,7 @@ export const products = [
   {
     id: "7",
     name: "chair 7",
-    image: "/chair_7.png",
+    image: "/Chair_7.png",
     price: "50.00",
     category: "chair",
   },
