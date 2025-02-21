@@ -22,7 +22,7 @@ function Footer() {
             </div>
             <form
               onSubmit={handleNewsSubmit}
-              className="flex flex-wrap gap-3 mb-10"
+              className="flex flex-wrap gap-3 mb-3"
             >
               <div className="name w-full md:w-[unset]">
                 <input
@@ -49,8 +49,8 @@ function Footer() {
             </form>
           </div>
 
-          <div className="w-full md:block hidden static lg:absolute right-0 lg:bottom-[-4rem] md:w-2/6 p-5">
-            <img className="" src="src/assets/images/footer-sofa.png" alt="" />
+          <div className="w-full md:block hidden static lg:absolute right-0 lg:bottom-[-6rem] md:w-2/6 p-5">
+            <img className="" src="public/footer-sofa.png" alt="" />
           </div>
         </div>
 

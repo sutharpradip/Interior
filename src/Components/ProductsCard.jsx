@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../Context/CartContext";
+import { useAuth } from "../Context/UserAuth";
 import { toast } from "react-toastify";
-import AOS from "aos";
-import "aos/dist/aos.css";
 
 function ProductsCard({
   image,
@@ -12,11 +11,8 @@ function ProductsCard({
   product_price,
   product_id,
 }) {
-  const { addToCart, loggedInUser } = useCart();
-
-  useEffect(() => {
-    AOS.init();
-  }, []);
+  const { addToCart } = useCart();
+  const { loggedInUser } = useAuth();
 
   const handleAddCart = (e) => {
     e.preventDefault();

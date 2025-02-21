@@ -1,22 +1,35 @@
 import React from "react";
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import CartItemCard from "../Components/CartItemCard";
 import { useCart } from "../Context/CartContext";
 
 function Cart() {
   const { cart } = useCart();
 
-  useEffect(() => {
-    console.log("Cart Updated:", cart);
-  });
+  const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   console.log("Cart Updated:", cart);
+  // });
+
+  const ProccedPayment = () => {
+    if ((cart || []).length === 0) {
+      toast.error("Your cart is empty");
+    } else {
+      navigate("/checkout"); // ✅ Only navigate
+    }
+  };
 
   // Calculate total items
-  const totalItems = (cart || []).reduce((sum, item) => sum + item.quantity, 0);
+  const totalItems = (cart || []).reduce(
+    (prev, item) => prev + item.quantity,
+    0
+  );
 
   // Calculate cart total price
   const cartTotalPrice = (cart || []).reduce(
-    (sum, item) => sum + item.price * item.quantity,
+    (prev, item) => prev + item.price * item.quantity,
     0
   );
 
@@ -85,9 +98,12 @@ function Cart() {
               </div>
 
               <div className="flex flex-col gap-2 text-center mt-4">
-                <Link className="bg-green-800 text-white w-full p-2 inline-block rounded-md">
+                <button
+                  onClick={ProccedPayment}
+                  className="bg-green-800 text-white w-full p-2 inline-block rounded-md"
+                >
                   Proceed to Checkout
-                </Link>
+                </button>
 
                 <Link className="border-green-800 text-green-800 border w-full p-2 inline-block rounded-md">
                   Return to Shopping

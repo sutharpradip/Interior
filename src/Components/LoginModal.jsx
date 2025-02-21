@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCart } from "../Context/CartContext";
+import { useAuth } from "../Context/UserAuth";
 import { toast } from "react-toastify";
 
 function LoginModal({ isOpen, onClose }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { setLoggedInUser } = useCart();
+  const { login } = useAuth();
 
   const handleLogin = async () => {
     const response = await fetch("http://localhost:5000/users");
@@ -17,9 +18,8 @@ function LoginModal({ isOpen, onClose }) {
     );
 
     if (user) {
-      localStorage.setItem("loggedInUser", JSON.stringify(user));
-      setLoggedInUser(user); // Store user in cart context
-      onClose(); // Close modal after successful login
+      login(user);
+      onClose();
       toast.success(`Logged In as ${user.name}`);
     } else {
       toast.error("Invalid Email or Password");
@@ -28,7 +28,10 @@ function LoginModal({ isOpen, onClose }) {
   return (
     isOpen && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        <div
+          className="bg-white p-6 rounded-lg shadow-lg w-96"
+          data-aos="fade-down"
+        >
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Login</h2>
           <input
             type="text"

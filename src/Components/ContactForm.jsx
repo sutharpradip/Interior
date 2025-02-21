@@ -75,7 +75,7 @@ function ContactForm() {
 
               <div className="flex">
                 <div className="w-full">
-                  <label htmlFor="">Message</label>
+                  <label>Message</label>
                   <textarea
                     rows={6}
                     className="w-full border rounded-md border-gray-300"

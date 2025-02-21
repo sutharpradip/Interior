@@ -2,7 +2,6 @@ import React, { useRef } from "react";
 import { products } from "../Data";
 import ProductsCard from "./ProductsCard";
 import { Link } from "react-router-dom";
-import { motion, useInView, AnimatePresence } from "framer-motion";
 
 function Products() {
   const selectedProducts = [];

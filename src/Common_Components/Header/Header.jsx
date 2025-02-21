@@ -3,9 +3,8 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./header.css";
 import LoginModal from "../../Components/LoginModal";
 import RegisterModal from "../../Components/RegisterModal";
-// import { useCart } from "../../Context/CartContext";
 import { toast } from "react-toastify";
-// import { ToastContainer, toast } from "react-toastify";
+import { useAuth } from "../../Context/UserAuth";
 
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -13,28 +12,18 @@ function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const [loggedInUser, setLoggedInUser] = useState(null);
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-    if (storedUser) {
-      setLoggedInUser(JSON.parse(storedUser)); // Parse and set the logged-in user
-    }
-  }, [isLoginModalOpen]);
+  const { logout, loggedInUser } = useAuth();
 
   // Handle logout
   const handleLogout = () => {
     toast.warn(`${loggedInUser.name} is logged Out`);
-    localStorage.removeItem("loggedInUser");
-    setLoggedInUser(null);
+    logout();
     setIsDropdownOpen(false);
-    window.location.reload();
   };
-
-  // useEffect(() => {}, [loggedInUser]);
 
   const handleLoginClick = () => {
     setIsLoginModalOpen(true);
@@ -184,12 +173,43 @@ function Header() {
             </ul>
 
             <ul className="flex items-center mt-5 md:mt-0 relative">
+              <li className="mr-5">
+                <NavLink
+                  to="/cart"
+                  className={({ isActive }) =>
+                    `inline-flex items-center text-sm font-semibold ${
+                      isActive ? "text-yellow-400" : "text-white"
+                    } hover:text-yellow-300 duration-200`
+                  }
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (loggedInUser) {
+                      navigate("/cart");
+                    } else {
+                      setIsLoginModalOpen(true);
+                    }
+                  }}
+                >
+                  <i className="fa-solid fa-cart-shopping"></i>
+                </NavLink>
+              </li>
+
               <li className="">
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="text-white text-sm font-semibold hover:text-yellow-300 duration-200"
                 >
-                  <i className="fa-solid fa-user"></i>
+                  {loggedInUser ? (
+                    <div className="avatar flex object-cover w-7 h-7 rounded-full overflow-hidden ">
+                      <img
+                        className="block "
+                        src={loggedInUser.avatar}
+                        alt={loggedInUser.name}
+                      />
+                    </div>
+                  ) : (
+                    <i className="fa-solid fa-user"></i>
+                  )}
                 </button>
                 {isDropdownOpen && (
                   <div
@@ -198,9 +218,15 @@ function Header() {
                   >
                     <ul>
                       <li className="px-4 py-2 text-gray-700 font-medium">
-                        {loggedInUser
+                        {/* {loggedInUser
                           ? `Welcome, ${loggedInUser.name}`
-                          : "Please login"}
+                          : "Please login"} */}
+
+                        {loggedInUser ? (
+                          <NavLink to="/account">{loggedInUser.name}</NavLink>
+                        ) : (
+                          "Please Login"
+                        )}
                       </li>
 
                       {!loggedInUser ? (
@@ -235,28 +261,6 @@ function Header() {
                     </ul>
                   </div>
                 )}
-              </li>
-
-              <li className="ml-5">
-                <NavLink
-                  to="/cart"
-                  className={({ isActive }) =>
-                    `inline-flex items-center text-sm font-semibold ${
-                      isActive ? "text-yellow-400" : "text-white"
-                    } hover:text-yellow-300 duration-200`
-                  }
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (loggedInUser) {
-                      // window.location.href = "/cart";
-                      navigate("/cart");
-                    } else {
-                      setIsLoginModalOpen(true);
-                    }
-                  }}
-                >
-                  <i className="fa-solid fa-cart-shopping"></i>
-                </NavLink>
               </li>
             </ul>
           </nav>

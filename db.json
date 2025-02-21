@@ -1,12 +1,16 @@
 {
   "users": [
     {
-      "id": "849f515c-3a8f-4fb1-8118-6bedbafe72d1",
-      "name": "Pradeep",
-      "email": "pradeep@mail.com",
-      "password": "1234567",
-      "cart": [
+      "id": "63d306ae-fc5a-47ac-8631-63e7b3db01e5",
+      "name": "Kartik Patel",
+      "email": "kartik@mail.com",
+      "phone": "1234567890",
+      "password": "1234",
+      "avatar": "https://api.dicebear.com/9.x/lorelei/svg",
+      "gender": "male",
+      "addresses": [
         {
+<<<<<<< HEAD
           "id": "7",
           "name": "chair 7",
           "price": "50.00",
@@ -51,6 +55,34 @@
           "quantity": 2
         }
       ]
+=======
+          "id": "1740112429604",
+          "name": "Kartik Patel",
+          "type": "Office",
+          "fullAddress": "Sirohi",
+          "country": "india",
+          "state": "Gujarat",
+          "city": "Ahmedabad",
+          "pincode": "307801",
+          "phone": "1234567890",
+          "alternatePhone": ""
+        },
+        {
+          "id": "1740112815827",
+          "name": "Pradeep suthar",
+          "type": "Home",
+          "fullAddress": "Sirohi",
+          "country": "india",
+          "state": "Gujarat",
+          "city": "Ahmedabad",
+          "pincode": "307801",
+          "phone": "1234567890",
+          "alternatePhone": ""
+        }
+      ],
+      "cart": [],
+      "orders": []
+>>>>>>> Test
     }
   ]
 }
