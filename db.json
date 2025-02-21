@@ -10,27 +10,31 @@
       "gender": "male",
       "addresses": [
         {
-          "id": "1740069570391",
+          "id": "1740112429604",
+          "name": "Kartik Patel",
+          "type": "Office",
+          "fullAddress": "Sirohi",
+          "country": "india",
+          "state": "Gujarat",
+          "city": "Ahmedabad",
+          "pincode": "307801",
+          "phone": "1234567890",
+          "alternatePhone": ""
+        },
+        {
+          "id": "1740112815827",
           "name": "Pradeep suthar",
           "type": "Home",
-          "fullAddress": "Barloot",
-          "country": "India",
-          "state": "Rajasthan",
-          "city": "Sirohi",
+          "fullAddress": "Sirohi",
+          "country": "india",
+          "state": "Gujarat",
+          "city": "Ahmedabad",
           "pincode": "307801",
-          "phone": "7023927315",
+          "phone": "1234567890",
           "alternatePhone": ""
         }
       ],
-      "cart": [
-        {
-          "id": "3",
-          "name": "chair 3",
-          "price": "50.00",
-          "image": "public/chair_3.png",
-          "quantity": 1
-        }
-      ],
+      "cart": [],
       "orders": []
     }
   ]

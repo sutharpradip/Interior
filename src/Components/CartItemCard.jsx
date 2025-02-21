@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useCart } from "../Context/CartContext"; // Import cart functions
+import { toast } from "react-toastify";
 
 function CartItemCard({ id, image, name, price, quantity, soldBy }) {
   const { increaseQuantity, decreaseQuantity, removeFromCart } = useCart();
@@ -10,6 +11,11 @@ function CartItemCard({ id, image, name, price, quantity, soldBy }) {
     } else {
       decreaseQuantity(id);
     }
+  };
+
+  const handleRemove = () => {
+    removeFromCart(id);
+    toast.error(`${name} Removed from cart`);
   };
 
   return (
@@ -70,7 +76,7 @@ function CartItemCard({ id, image, name, price, quantity, soldBy }) {
           </div>
         </div>
         <button
-          onClick={() => removeFromCart(id)}
+          onClick={handleRemove}
           className="bg-red-600 px-3 py-1 rounded-md mt-4 text-white"
         >
           Remove

@@ -8,7 +8,7 @@ export const PaymentProvider = ({ children }) => {
   const { loggedInUser, setLoggedInUser } = useAuth();
   const [isPaymentLoading, setIsPaymentLoading] = useState(false);
 
-  const handlePayment = async () => {
+  const handlePayment = async (totalPayable, onSuccess, selectedAddress) => {
     if (!loggedInUser) {
       toast.error("Please log in to proceed with payment.");
       return;
@@ -49,16 +49,16 @@ export const PaymentProvider = ({ children }) => {
           return;
         }
 
-        const totalAmount = latestUser.cart.reduce(
-          (sum, item) => sum + item.price * item.quantity,
-          0
-        );
+        // const totalAmount = latestUser.cart.reduce(
+        //   (sum, item) => sum + item.price * item.quantity,
+        //   0
+        // );
 
         const options = {
           key: "rzp_test_isGXbfAS0kV5ai",
-          amount: totalAmount * 100,
+          amount: totalPayable * 100,
           currency: "INR",
-          name: "Your Store",
+          name: "Interior",
           description: "Test Transaction",
           image: "https://your-logo-url.com",
           handler: async function (response) {
@@ -67,7 +67,8 @@ export const PaymentProvider = ({ children }) => {
             const newOrder = {
               id: Date.now(),
               items: latestUser.cart,
-              totalAmount,
+              address: selectedAddress,
+              totalAmount: totalPayable,
               paymentId: response.razorpay_payment_id,
               status: "Paid",
               date: new Date().toISOString(),
@@ -90,6 +91,10 @@ export const PaymentProvider = ({ children }) => {
             // Save to local storage & update state
             localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
             setLoggedInUser(updatedUser);
+
+            if (onSuccess) {
+              onSuccess(); // Redirect after successful payment
+            }
           },
           prefill: {
             name: latestUser.name,

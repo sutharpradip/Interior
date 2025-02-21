@@ -3,11 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CartItemCard from "../Components/CartItemCard";
 import { useCart } from "../Context/CartContext";
-import { usePayment } from "../Context/PaymentContext";
 
 function Cart() {
   const { cart } = useCart();
-  const { handlePayment } = usePayment();
 
   const navigate = useNavigate();
 
