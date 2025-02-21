@@ -29,7 +29,7 @@ function HeroSec({ heading = "Modern Interior Design Studio", headingSpan }) {
           </div>
 
           <div className=" w-full md:w-3/5 md:ps-20">
-            <img className="" src="public/Hero_Couch.png" alt="couch" />
+            <img className="" src="/Hero_Couch.png" alt="couch" />
           </div>
         </div>
       </div>

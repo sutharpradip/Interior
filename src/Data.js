@@ -2,7 +2,7 @@ export const products = [
   {
     id: "1",
     name: "chair 1",
-    image: "/public/chair_1.png",
+    image: "/chair_1.png",
     price: "50.00",
     category: "chair",
   },
@@ -10,7 +10,7 @@ export const products = [
   {
     id: "2",
     name: "chair 2",
-    image: "/public/chair_2.png",
+    image: "/chair_2.png",
     price: "50.00",
     category: "chair",
   },
@@ -18,7 +18,7 @@ export const products = [
   {
     id: "3",
     name: "chair 3",
-    image: "/public/chair_3.png",
+    image: "/chair_3.png",
     price: "50.00",
     category: "chair",
   },

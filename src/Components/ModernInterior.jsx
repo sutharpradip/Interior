@@ -10,25 +10,13 @@ function ModernInterior() {
               <div className="image-grid justify-between grid grid-cols-12 relative">
                 <div className="relative grid  col-start-1 col-end-9 row-start-1 row-end-8">
                   {" "}
-                  <img
-                    className="rounded-3xl"
-                    src="public/img-grid-1.jpg"
-                    alt=""
-                  />
+                  <img className="rounded-3xl" src="/img-grid-1.jpg" alt="" />
                 </div>
                 <div className="relative grid ps-4 col-start-9 col-end-13 row-start-1 row-end-6">
-                  <img
-                    className="rounded-3xl"
-                    src="public/img-grid-2.jpg"
-                    alt=""
-                  />
+                  <img className="rounded-3xl" src="/img-grid-2.jpg" alt="" />
                 </div>
                 <div className="relative grid pt-4 col-start-7 col-end-13 row-start-6 row-end-8">
-                  <img
-                    className="rounded-3xl"
-                    src="public/img-grid-3.jpg"
-                    alt=""
-                  />
+                  <img className="rounded-3xl" src="/img-grid-3.jpg" alt="" />
                 </div>
               </div>
             </div>
