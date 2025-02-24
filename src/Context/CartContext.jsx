@@ -9,15 +9,13 @@ export const CartProvider = ({ children }) => {
 
   // Fetch cart from db.json when user logs in
   useEffect(() => {
-    if (loggedInUser) {
+    if (loggedInUser?.id) {
       fetch(`https://interior-db.onrender.com/users/${loggedInUser.id}`)
         .then((response) => response.json())
         .then((user) => setCart(user.cart || []))
         .catch((error) => console.error("Error fetching cart:", error));
-    } else {
-      setCart([]);
     }
-  }, [loggedInUser]);
+  }, [loggedInUser?.id]);
 
   useEffect(() => {
     if (loggedInUser && cart.length > 0) {

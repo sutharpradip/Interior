@@ -9,6 +9,8 @@ import Cart from "../Pages/Cart";
 import UserDashboard from "../Pages/UserDashboard";
 import Profile from "../Components/UserAccount/Profile";
 import Checkout from "../Components/Checkout";
+import OrderPlaced from "../Components/OrderPlaced";
+import OrderDetails from "../Components/UserAccount/OrderDetails";
 
 export default function AppRouter() {
   return (
@@ -22,6 +24,8 @@ export default function AppRouter() {
 
       <Route path="/cart/*" element={<Cart />} />
       <Route path="/checkout" element={<Checkout />} />
+      <Route path="/orderplaced" element={<OrderPlaced />} />
+      <Route path="/account/orders/:orderId" element={<OrderDetails />} />
 
       <Route path="/account/*" element={<UserDashboard />}>
         <Route path="profile" element={<Profile />} />

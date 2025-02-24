@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import CartItemCard from "../Components/CartItemCard";
@@ -6,40 +6,39 @@ import { useCart } from "../Context/CartContext";
 
 function Cart() {
   const { cart } = useCart();
-
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true); // 👈 Loading state
 
-  // useEffect(() => {
-  //   console.log("Cart Updated:", cart);
-  // });
+  useEffect(() => {
+    // Simulate loading effect
+    const timer = setTimeout(() => {
+      setIsLoading(false); // 🔄 Stop loading after fetching data
+    }, 1000); // Adjust delay as needed
+
+    return () => clearTimeout(timer); // Cleanup timer
+  }, [cart]);
 
   const ProccedPayment = () => {
     if ((cart || []).length === 0) {
       toast.error("Your cart is empty");
     } else {
-      navigate("/checkout"); // ✅ Only navigate
+      navigate("/checkout");
     }
   };
 
-  // Calculate total items
+  // Calculate totals
   const totalItems = (cart || []).reduce(
     (prev, item) => prev + item.quantity,
     0
   );
 
-  // Calculate cart total price
   const cartTotalPrice = (cart || []).reduce(
     (prev, item) => prev + item.price * item.quantity,
     0
   );
 
-  // Apply coupon discount (Example: 10% off if cart > $100)
   const discount = cartTotalPrice > 100 ? cartTotalPrice * 0.1 : 0;
-
-  // Fixed shipping cost
   const shipping = cartTotalPrice > 0 ? 20 : 0;
-
-  // Final total after discount
   const finalTotal = cartTotalPrice - discount + shipping;
 
   return (
@@ -49,7 +48,12 @@ function Cart() {
           {/* Cart Items */}
           <div className="w-full md:w-3/5">
             <div className="flex flex-col gap-3">
-              {(cart || []).length === 0 ? (
+              {isLoading ? (
+                <div className="text-center py-10">
+                  <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-800 mx-auto"></div>
+                  <p className="text-gray-600 mt-4">Loading cart items...</p>
+                </div>
+              ) : (cart || []).length === 0 ? (
                 <p className="text-center text-gray-600">Your cart is empty</p>
               ) : (
                 cart.map((item) => (
@@ -60,7 +64,7 @@ function Cart() {
                     name={item.name}
                     price={item.price}
                     quantity={item.quantity}
-                    soldBy="Furni Store"
+                    soldBy={item.soldBy}
                   />
                 ))
               )}
@@ -105,7 +109,10 @@ function Cart() {
                   Proceed to Checkout
                 </button>
 
-                <Link className="border-green-800 text-green-800 border w-full p-2 inline-block rounded-md">
+                <Link
+                  to="/shop"
+                  className="border-green-800 text-green-800 border w-full p-2 inline-block rounded-md"
+                >
                   Return to Shopping
                 </Link>
               </div>

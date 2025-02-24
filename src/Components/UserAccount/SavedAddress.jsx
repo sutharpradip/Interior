@@ -10,7 +10,13 @@ function SavedAddress() {
   const [AddrFormOpen, setAddrFormOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
 
-  if (!loggedInUser) return <div>Loading...</div>;
+  if (!loggedInUser)
+    return (
+      <div className="text-center py-10">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-800 mx-auto"></div>
+        <p className="text-gray-600 mt-4">Loading cart items...</p>
+      </div>
+    );
 
   const handleAdd = () => {
     setEditingAddress(null);

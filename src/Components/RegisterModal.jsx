@@ -8,47 +8,56 @@ function RegisterModal({ isRegisterOpen, onClose }) {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [gender, setGender] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleRegister = async () => {
-    const response = await fetch("https://interior-db.onrender.com/users");
-    const users = await response.json();
+    setIsLoading(true);
 
-    // check existing user
-    const existingUser = users.find((user) => user.email === email);
+    try {
+      const response = await fetch("https://interior-db.onrender.com/users");
+      const users = await response.json();
 
-    if (existingUser) {
-      toast.error("This user is already exist");
-      return;
+      const existingUser = users.find((user) => user.email === email);
+
+      if (existingUser) {
+        toast.error("This user already exists");
+        setIsLoading(false);
+        return;
+      }
+
+      // Generate avatar URL
+      const avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg`;
+
+      // Create new user
+      const newUser = {
+        id: uuidv4(),
+        name,
+        email,
+        phone,
+        password,
+        avatar: avatarUrl,
+        gender,
+        addresses: [],
+        cart: [],
+        orders: [],
+      };
+
+      // Save new user
+      await fetch("https://interior-db.onrender.com/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newUser),
+      });
+
+      toast.success(`Registered as ${name}`);
+      onClose();
+    } catch (error) {
+      toast.error("Registration failed. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
-
-    // Generate avatar URL (using a random avatar generation service)
-    const avatarUrl = `https://api.dicebear.com/9.x/lorelei/svg`;
-
-    // create new user
-    const newUser = {
-      id: uuidv4(),
-      name,
-      email,
-      phone,
-      password,
-      avatar: avatarUrl,
-      gender,
-      addresses: [],
-      cart: [],
-      orders: [],
-    };
-
-    // save new user
-    await fetch("https://interior-db.onrender.com/users", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newUser),
-    });
-
-    onClose(); //close th modal
-    toast.success(`Registred as ${name}`);
   };
 
   return (
@@ -59,6 +68,7 @@ function RegisterModal({ isRegisterOpen, onClose }) {
           data-aos="fade-down"
         >
           <h2 className="text-xl font-semibold text-gray-700 mb-4">Register</h2>
+
           <input
             type="text"
             placeholder="Username"
@@ -104,15 +114,23 @@ function RegisterModal({ isRegisterOpen, onClose }) {
               <option value="other">Other</option>
             </select>
           </div>
+
           <button
             onClick={handleRegister}
-            className="w-full bg-green-800  text-white py-2 rounded-md hover:bg-green-700 transition"
+            disabled={isLoading}
+            className={`w-full py-2 rounded-md text-white transition ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-green-800 hover:bg-green-700"
+            }`}
           >
-            Register
+            {isLoading ? "Registering..." : "Register"}
           </button>
+
           <button
             onClick={onClose}
             className="w-full mt-3 bg-gray-300 text-gray-700 py-2 rounded-md hover:bg-gray-400 transition"
+            disabled={isLoading}
           >
             Close
           </button>

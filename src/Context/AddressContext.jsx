@@ -64,9 +64,11 @@ export const AddressProvider = ({ children }) => {
     const response = await fetch(
       `https://interior-db.onrender.com/users/${loggedInUser.id}`,
       {
-        method: "PUT",
+        method: "PATCH", // ✅ Use PATCH instead of PUT
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...loggedInUser, addresses: updatedAddresses }),
+        body: JSON.stringify({
+          addresses: updatedAddresses, // Only update addresses
+        }),
       }
     );
 

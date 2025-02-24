@@ -10,6 +10,7 @@ function ProductsCard({
   product_name,
   product_price,
   product_id,
+  soldBy,
 }) {
   const { addToCart } = useCart();
   const { loggedInUser } = useAuth();
@@ -23,6 +24,7 @@ function ProductsCard({
         price: product_price,
         image: image,
         quantity: 1,
+        soldby: soldBy,
       };
 
       addToCart(product);

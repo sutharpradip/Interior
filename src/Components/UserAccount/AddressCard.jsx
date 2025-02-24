@@ -5,7 +5,7 @@ function Address({ address, onEdit, onRemove }) {
 
   return (
     <>
-      <div className="flex flex-wrap md:flex-row flex-col justify-between">
+      <div className="flex flex-wrap md:flex-row flex-col justify-between w-full">
         <div className="bg-white w-full shadow-md rounded-lg px-6 py-4 flex flex-col gap-3 border border-gray-200">
           <div className="flex items-center justify-between">
             <h2 className="font-semibold text-2xl">{address.name}</h2>

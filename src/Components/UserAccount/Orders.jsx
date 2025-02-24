@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../Context/UserAuth";
+import { Link } from "react-router-dom";
 import OrderItemCard from "../OrderItemcard";
 
 function Orders() {
@@ -17,9 +18,9 @@ function Orders() {
         );
         if (response.ok) {
           const updatedUser = await response.json();
-          localStorage.setItem("loggedInUser", JSON.stringify(updatedUser)); // Sync local storage
+          localStorage.setItem("loggedInUser", JSON.stringify(updatedUser));
           setLoggedInUser(updatedUser);
-          setUserOrders(updatedUser.orders || []); // Store orders separately
+          setUserOrders(updatedUser.orders || []);
         }
       } catch (error) {
         console.error("Failed to fetch updated user data:", error);
@@ -29,7 +30,7 @@ function Orders() {
     };
 
     fetchUpdatedUser();
-  }, [loggedInUser?.id]); // Fetch data when user ID changes
+  }, [loggedInUser?.id]);
 
   if (!loggedInUser) {
     return (
@@ -40,24 +41,28 @@ function Orders() {
   }
 
   return (
-    <div className=" p-6 rounded-lg shadow-sm bg-gray-100">
+    <div className="p-6 rounded-lg shadow-sm bg-gray-100">
       <h2 className="text-xl font-semibold mb-4">My Orders</h2>
       <div className="flex flex-col gap-5">
         {loading ? (
-          <p>Loading...</p>
+          <div className="text-center py-10">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-green-800 mx-auto"></div>
+            <p className="text-gray-600 mt-4">Loading your orders...</p>
+          </div>
         ) : userOrders.length > 0 ? (
           userOrders.map((order) => (
-            <OrderItemCard
-              key={order.id}
-              image={order.items[0]?.image || ""}
-              name={order.items[0]?.name || "Unknown Item"}
-              price={order.totalAmount}
-              quantity={order.items.length}
-              soldBy={order.items[0]?.soldBy || "N/A"}
-              details={order.items[0]?.details || ""}
-              status={order.status}
-              updates={`Order ID: ${order.id}`}
-            />
+            <Link key={order.id} to={`/account/orders/${order.id}`}>
+              <OrderItemCard
+                image={order.items[0]?.image || ""}
+                name={order.items[0]?.name || "Unknown Item"}
+                price={order.totalAmount}
+                quantity={order.items.length}
+                soldBy={order.items[0]?.soldBy || "N/A"}
+                details={order.items[0]?.details || ""}
+                status={order.status}
+                updates={`Order ID: ${order.id}`}
+              />
+            </Link>
           ))
         ) : (
           <p>No orders placed yet.</p>

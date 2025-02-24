@@ -49,11 +49,6 @@ export const PaymentProvider = ({ children }) => {
           return;
         }
 
-        // const totalAmount = latestUser.cart.reduce(
-        //   (sum, item) => sum + item.price * item.quantity,
-        //   0
-        // );
-
         const options = {
           key: "rzp_test_isGXbfAS0kV5ai",
           amount: totalPayable * 100,
@@ -62,7 +57,7 @@ export const PaymentProvider = ({ children }) => {
           description: "Test Transaction",
           image: "https://your-logo-url.com",
           handler: async function (response) {
-            toast.success("Payment Successful!");
+            toast.success("Payment successful! Order placed.");
 
             const newOrder = {
               id: Date.now(),

@@ -5,6 +5,7 @@ export const products = [
     image: "/Chair_1.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
 
   {
@@ -13,6 +14,7 @@ export const products = [
     image: "/Chair_2.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
 
   {
@@ -21,6 +23,7 @@ export const products = [
     image: "/Chair_3.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
 
   {
@@ -29,6 +32,7 @@ export const products = [
     image: "/Chair_4.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
 
   {
@@ -37,6 +41,7 @@ export const products = [
     image: "/Chair_5.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
 
   {
@@ -45,6 +50,7 @@ export const products = [
     image: "/Chair_6.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
 
   {
@@ -53,6 +59,7 @@ export const products = [
     image: "/Chair_7.png",
     price: "50.00",
     category: "chair",
+    soldBy: "Furniture Store"
   },
   {
     id: "8",
@@ -60,6 +67,7 @@ export const products = [
     image: "/Bed-1.png",
     price: "50.00",
     category: "bed",
+    soldBy: "Furniture Store"
   },
   {
     id: "9",
@@ -67,6 +75,7 @@ export const products = [
     image: "/Bed-2.png",
     price: "50.00",
     category: "bed",
+    soldBy: "FurnitureStore",
   },
   {
     id: "10",
@@ -74,6 +83,7 @@ export const products = [
     image: "/Bed-3.png",
     price: "50.00",
     category: "bed",
+    soldBy: "FurnitureStore",
   },
   {
     id: "11",
@@ -81,6 +91,7 @@ export const products = [
     image: "/Bed-4.png",
     price: "50.00",
     category: "bed",
+    soldBy: "FurnitureStore",
   },
   {
     id: "12",
@@ -88,6 +99,7 @@ export const products = [
     image: "/Bed-5.png",
     price: "50.00",
     category: "bed",
+    soldBy: "FurnitureStore",
   },
   {
     id: "13",
@@ -95,6 +107,7 @@ export const products = [
     image: "/Bed-6.png",
     price: "50.00",
     category: "bed",
+    soldBy: "FurnitureStore",
   },
   {
     id: "14",
@@ -102,6 +115,7 @@ export const products = [
     image: "/Sofa-1.png",
     price: "50.00",
     category: "sofa",
+    soldBy: "FurnitureStore",
   },
   {
     id: "15",
@@ -109,6 +123,7 @@ export const products = [
     image: "/Sofa-2.png",
     price: "50.00",
     category: "sofa",
+    soldBy: "FurnitureStore",
   },
   {
     id: "16",
@@ -116,6 +131,7 @@ export const products = [
     image: "/Sofa-3.png",
     price: "50.00",
     category: "sofa",
+    soldBy: "FurnitureStore",
   },
   {
     id: "17",
@@ -123,6 +139,7 @@ export const products = [
     image: "/Sofa-4.png",
     price: "50.00",
     category: "sofa",
+    soldBy: "FurnitureStore",
   },
   {
     id: "18",
@@ -130,6 +147,7 @@ export const products = [
     image: "/Sofa-5.png",
     price: "50.00",
     category: "sofa",
+    soldBy: "FurnitureStore",
   },
   {
     id: "19",
@@ -137,6 +155,7 @@ export const products = [
     image: "/Sofa-6.png",
     price: "50.00",
     category: "sofa",
+    soldBy: "FurnitureStore",
   },
 ];
 

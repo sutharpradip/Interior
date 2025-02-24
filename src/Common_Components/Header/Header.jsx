@@ -12,17 +12,22 @@ function Header() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isRegisterModalOpen, setIsRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false); // 🔄 Logout loading state
 
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
-
   const { logout, loggedInUser } = useAuth();
 
-  // Handle logout
-  const handleLogout = () => {
-    toast.warn(`${loggedInUser.name} is logged Out`);
-    logout();
-    setIsDropdownOpen(false);
+  // Handle logout with loading
+  const handleLogout = async () => {
+    setIsLoggingOut(true); // Start loading
+
+    setTimeout(() => {
+      toast.warn(`${loggedInUser.name} is logged Out`);
+      logout();
+      setIsDropdownOpen(false);
+      setIsLoggingOut(false); // Stop loading
+    }, 1500); // Simulate API delay
   };
 
   const handleLoginClick = () => {
@@ -37,26 +42,13 @@ function Header() {
 
   useEffect(() => {
     function handleScroll() {
-      if (window.scrollY > 600) {
-        setHeaderFixed(true);
-      } else {
-        setHeaderFixed(false);
-      }
-      if (window.scrollY > 1) {
-        setIsMenuOpen(false);
-      }
+      setHeaderFixed(window.scrollY > 600);
+      if (window.scrollY > 1) setIsMenuOpen(false);
     }
 
     window.addEventListener("scroll", handleScroll);
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
-  const LinkClick = () => {
-    setIsMenuOpen(false);
-  };
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -68,9 +60,10 @@ function Header() {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const LinkClick = () => setIsMenuOpen(false);
+
   return (
     <>
-      {/* <ToastContainer /> */}
       <header
         className={`${
           headerFixed ? "header-fixed" : ""
@@ -101,75 +94,23 @@ function Header() {
             }`}
           >
             <ul className="flex md:flex-row mt-5 md:mt-0 gap-y-5 flex-col md:items-center justify-center ms-auto mr-10">
-              <li className="lg:mx-4 mx-0 ">
-                <NavLink
-                  to="/"
-                  className={({ isActive }) =>
-                    `inline-flex p-1 items-center font-medium ${
-                      isActive ? "text-yellow-400 active" : "text-gray-400"
-                    } hover:text-yellow-300 duration-200 md:text-sm relative`
-                  }
-                  onClick={LinkClick}
-                >
-                  Home
-                </NavLink>
-              </li>
-
-              <li className="lg:mx-4 mx-0 ">
-                <NavLink
-                  to="/shop"
-                  className={({ isActive }) =>
-                    `inline-flex p-1 items-center font-medium ${
-                      isActive ? "text-yellow-400 active" : "text-gray-400"
-                    } hover:text-yellow-300 duration-200 md:text-sm relative`
-                  }
-                  onClick={LinkClick}
-                >
-                  Shop
-                </NavLink>
-              </li>
-
-              <li className="lg:mx-4 mx-0 ">
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) =>
-                    `inline-flex p-1 items-center font-medium ${
-                      isActive ? "text-yellow-400 active" : "text-gray-400"
-                    } hover:text-yellow-300 duration-200 md:text-sm relative`
-                  }
-                  onClick={LinkClick}
-                >
-                  About Us
-                </NavLink>
-              </li>
-
-              <li className="lg:mx-4 mx-0 ">
-                <NavLink
-                  to="/blogs"
-                  className={({ isActive }) =>
-                    `inline-flex p-1 items-center font-medium ${
-                      isActive ? "text-yellow-400 active" : "text-gray-400"
-                    } hover:text-yellow-300 duration-200 md:text-sm relative`
-                  }
-                  onClick={LinkClick}
-                >
-                  Blog
-                </NavLink>
-              </li>
-
-              <li className="lg:mx-4 mx-0 ">
-                <NavLink
-                  to="/contact"
-                  className={({ isActive }) =>
-                    `inline-flex p-1 items-center font-medium ${
-                      isActive ? "text-yellow-400 active " : "text-gray-400"
-                    } hover:text-yellow-300 duration-200 md:text-sm relative`
-                  }
-                  onClick={LinkClick}
-                >
-                  Contact Us
-                </NavLink>
-              </li>
+              {["/", "/shop", "/about", "/blogs", "/contact"].map(
+                (path, idx) => (
+                  <li className="lg:mx-4 mx-0" key={idx}>
+                    <NavLink
+                      to={path}
+                      className={({ isActive }) =>
+                        `inline-flex p-1 items-center font-medium ${
+                          isActive ? "text-yellow-400 active" : "text-gray-400"
+                        } hover:text-yellow-300 duration-200 md:text-sm relative`
+                      }
+                      onClick={LinkClick}
+                    >
+                      {["Home", "Shop", "About Us", "Blog", "Contact Us"][idx]}
+                    </NavLink>
+                  </li>
+                )
+              )}
             </ul>
 
             <ul className="flex items-center mt-5 md:mt-0 relative">
@@ -183,26 +124,24 @@ function Header() {
                   }
                   onClick={(e) => {
                     e.preventDefault();
-                    if (loggedInUser) {
-                      navigate("/cart");
-                    } else {
-                      setIsLoginModalOpen(true);
-                    }
+                    loggedInUser
+                      ? navigate("/cart")
+                      : setIsLoginModalOpen(true);
                   }}
                 >
                   <i className="fa-solid fa-cart-shopping"></i>
                 </NavLink>
               </li>
 
-              <li className="">
+              <li>
                 <button
                   onClick={() => setIsDropdownOpen(!isDropdownOpen)}
                   className="text-white text-sm font-semibold hover:text-yellow-300 duration-200"
                 >
                   {loggedInUser ? (
-                    <div className="avatar flex object-cover w-7 h-7 rounded-full overflow-hidden ">
+                    <div className="avatar flex object-cover w-7 h-7 rounded-full overflow-hidden">
                       <img
-                        className="block "
+                        className="block"
                         src={loggedInUser.avatar}
                         alt={loggedInUser.name}
                       />
@@ -211,6 +150,7 @@ function Header() {
                     <i className="fa-solid fa-user"></i>
                   )}
                 </button>
+
                 {isDropdownOpen && (
                   <div
                     ref={dropdownRef}
@@ -218,10 +158,6 @@ function Header() {
                   >
                     <ul>
                       <li className="px-4 py-2 text-gray-700 font-medium">
-                        {/* {loggedInUser
-                          ? `Welcome, ${loggedInUser.name}`
-                          : "Please login"} */}
-
                         {loggedInUser ? (
                           <NavLink to="/account">{loggedInUser.name}</NavLink>
                         ) : (
@@ -253,8 +189,16 @@ function Header() {
                           <button
                             className="block w-full text-start px-4 py-2 text-gray-700 hover:bg-gray-200"
                             onClick={handleLogout}
+                            disabled={isLoggingOut}
                           >
-                            Logout
+                            {isLoggingOut ? (
+                              <div className="flex items-center">
+                                <div className="animate-spin rounded-full h-4 w-4 border-t-2 border-gray-600 mr-2"></div>
+                                Logging out...
+                              </div>
+                            ) : (
+                              "Logout"
+                            )}
                           </button>
                         </li>
                       )}

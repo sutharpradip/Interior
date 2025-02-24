@@ -13,7 +13,10 @@ function OrderItemCard({
   updates,
 }) {
   return (
-    <Link key={id} className="bg-white block p-6 rounded-lg shadow-md">
+    <div
+      to={`/account/orders/${id}`} // ✅ Navigate to specific order detail page
+      className="bg-white block p-6 rounded-lg shadow-md hover:shadow-lg transition-all"
+    >
       <div className="inline-flex justify-between items-center space-x-5 mb-6">
         <div className="icon flex justify-center items-center text-[#3b5d50] bg-gray-200 p-2 rounded-full w-9 h-9">
           <i className="fa-solid fa-truck-fast"></i>
@@ -26,12 +29,12 @@ function OrderItemCard({
 
       <div className="flex items-center gap-3">
         <div className="order-image w-1/4 bg-gray-100 rounded-md">
-          <img className="" src={image} alt={name} />
+          <img className="w-full h-auto rounded" src={image} alt={name} />
         </div>
 
         <div className="order-item-details text-sm flex flex-col gap-2">
           <h3 className="font-bold text-lg">{name}</h3>
-          <p className="">{details}</p>
+          <p>{details}</p>
           <span>
             Price: <strong>₹{price}</strong>
           </span>
@@ -43,7 +46,7 @@ function OrderItemCard({
           </span>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 

@@ -12,7 +12,9 @@ const Checkout = () => {
   const [paymentMethod, setPaymentMethod] = useState("");
   const [AddrFormOpen, setAddrFormOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState(null);
-  const { cart } = useCart();
+  const [isLoading, setIsLoading] = useState(false); // 👈 Loading state
+
+  const { cart, clearCart } = useCart();
   const { addresses, removeAddress, editAddress } = useAddress();
   const { handlePayment } = usePayment();
 
@@ -27,27 +29,33 @@ const Checkout = () => {
       toast.error("Please select a payment method!");
       return;
     }
+    if (cart.length === 0) {
+      toast.error("Your cart is empty!");
+      return;
+    }
 
     if (paymentMethod === "cash") {
       toast.success("Order placed successfully!");
-      setTimeout(() => navigate("/shop"), 2000);
+      clearCart();
+      setTimeout(() => navigate("/orderplaced"), 1000);
       return;
     } else if (paymentMethod === "razorpay") {
+      setIsLoading(true); // Start loading
+
       handlePayment(
         totalPayable,
         () => {
-          toast.success("Payment successful! Order placed.");
-          setTimeout(() => navigate("/shop"), 1000);
+          setIsLoading(false); // Stop loading on success
+          navigate("/orderplaced");
+          clearCart();
         },
-        selectedAddress
+        selectedAddress,
+        () => {
+          setIsLoading(false); // Stop loading on failure
+          toast.error("Payment failed. Please try again.");
+        }
       );
-      return;
     }
-  };
-
-  const handleEdit = (address) => {
-    setEditingAddress(address);
-    setAddrFormOpen(true);
   };
 
   const { subtotal, shipping, tax, coupon, totalPayable } = useMemo(() => {
@@ -69,32 +77,39 @@ const Checkout = () => {
       <div className="flex flex-col lg:flex-row w-full max-w-7xl mx-auto p-4 lg:p-8">
         {/* Delivery Address Section */}
         <div className="w-full md:w-8/12 bg-gray-100 rounded-xl p-6 mb-6 lg:mb-0 border">
-          <h2 className="text-xl font-semibold mb-4">Delivery Address</h2>
-          <button onClick={() => setAddrFormOpen(true)}>Add New Address</button>
+          <div className="flex justify-between mb-7">
+            <h2 className="text-xl font-semibold">Delivery Address</h2>
+            <button
+              className="border border-[#3b5d50] px-5 py-2 hover:bg-[#3b5d50] hover:text-white transition-all rounded-md"
+              onClick={() => setAddrFormOpen(true)}
+            >
+              Add New Address
+            </button>
+          </div>
 
           <div className="flex flex-col gap-8">
             <div className="flex flex-wrap flex-col md:flex-row justify-between">
               {addresses.map((addr, index) => (
                 <div
                   key={index}
-                  className={`border w-full lg:w-[49%] rounded-lg cursor-pointer flex items-center justify-between ${
+                  className={`border w-full lg:w-[49%] rounded-lg cursor-pointer flex items-center justify-between transition-all ${
                     selectedAddress === addr
-                      ? "border-[rgb(59,93,80)]"
+                      ? "border-[rgb(59,93,80)] scale-105"
                       : "border-gray-300"
                   }`}
                   onClick={() => setSelectedAddress(addr)}
                 >
                   <AddressCard
                     address={addr}
-                    onEdit={handleEdit}
+                    onEdit={() => setEditingAddress(addr)}
                     onRemove={() => removeAddress(addr.id)}
                   />
                 </div>
               ))}
             </div>
 
-            {/* payment  */}
-            <div className="payment-methods ">
+            {/* Payment Options */}
+            <div className="payment-methods">
               <h2 className="text-xl font-semibold mb-4">Payment Options</h2>
 
               <div className="flex flex-col gap-3">
@@ -127,7 +142,7 @@ const Checkout = () => {
         </div>
 
         {/* Order Summary Section */}
-        <div className=" w-full md:w-2/6 bg-gray-100 border  rounded-xl p-6 ml-0 lg:ml-6">
+        <div className="w-full md:w-2/6 bg-gray-100 border rounded-xl p-6 ml-0 lg:ml-6">
           <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
           <div className="space-y-4">
             {cart?.map((item, index) => (
@@ -137,7 +152,7 @@ const Checkout = () => {
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-gray-200 rounded-lg">
-                    <img src={item.image} alt="" />
+                    <img src={item.image} alt={item.name} />
                   </div>
                   <p>{item.name}</p>
                 </div>
@@ -146,7 +161,7 @@ const Checkout = () => {
             ))}
           </div>
 
-          <div className=" pt-4">
+          <div className="pt-4">
             <div className="flex justify-between text-gray-700">
               <p>Subtotal</p>
               <p>${subtotal.toFixed(2)}</p>
@@ -170,11 +185,26 @@ const Checkout = () => {
             <p>Total Payable</p>
             <p>${totalPayable.toFixed(2)}</p>
           </div>
+
           <button
             onClick={handlePlaceOrder}
-            className="w-full mt-4 bg-[rgb(59,93,80)] text-white py-3 rounded-lg"
+            className={`w-full mt-4 py-3 rounded-lg flex justify-center items-center gap-2 ${
+              isLoading
+                ? "bg-gray-400 cursor-not-allowed"
+                : !selectedAddress || !paymentMethod
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-[rgb(59,93,80)] text-white"
+            }`}
+            disabled={!selectedAddress || !paymentMethod || isLoading}
           >
-            Place Order
+            {isLoading ? (
+              <>
+                <span className="loader border-2 border-t-transparent rounded-full w-5 h-5 animate-spin"></span>
+                Processing...
+              </>
+            ) : (
+              "Place Order"
+            )}
           </button>
         </div>
 

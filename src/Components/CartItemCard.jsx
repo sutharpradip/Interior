@@ -35,7 +35,7 @@ function CartItemCard({ id, image, name, price, quantity, soldBy }) {
             <div className="cart-item-details">
               <h2 className="font-semibold text-lg">{name}</h2>
               <h3 className="mt-3 text-gray-600 font-normal">
-                Sold By:{" "}
+                Sold By:
                 <span className="font-medium text-gray-800">{soldBy}</span>
               </h3>
             </div>
